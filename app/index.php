@@ -39,7 +39,7 @@
         return $response;
     });
 
-    $app->post('/login/{user}/{contra}', \UsuarioController::class . ':obtenerTodos');
+    $app->get('/login/{user}/{contra}', \UsuarioController::class . ':obtenerTodos');
 
     $app->run();
 
