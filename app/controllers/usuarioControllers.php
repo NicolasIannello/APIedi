@@ -15,7 +15,7 @@
                 }
             }
 
-            //echo $arg["user"]."<br>".$arg["contra"]."<br>";
+            //echo $arg["user"]."<br>".$arg["contra"]."<br>sadadsa";
             $response->getBody()->Write(json_encode($band));
             return $response;
         }
