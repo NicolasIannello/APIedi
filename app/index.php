@@ -30,6 +30,7 @@
 
     $app->get('/hello/{name}/{apellido}', function (Request $request, Response $response, array $args) {
         $name = $args['name'];
+        $apellido = $args['apellido'];
         $response->getBody()->write("Hello, $name $apellido");
         return $response;
     });
