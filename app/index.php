@@ -11,6 +11,7 @@
 
     require __DIR__ . '/../vendor/autoload.php';
     require __DIR__ . '/controllers/usuarioControllers.php';
+    require __DIR__ . '/controllers/turnosControllers.php';
     require __DIR__ . '/DB/accesoDatos.php';
 
     $app = AppFactory::create();
@@ -28,7 +29,7 @@
         return $response;
     });
 
-    $app->get('/hello/{name}/{apellido}', function (Request $request, Response $response, array $args) {
+    /*$app->get('/hello/{name}/{apellido}', function (Request $request, Response $response, array $args) {
         $name = $args['name'];
         $apellido = $args['apellido'];
         $response->getBody()->write("Hello, $name $apellido");
@@ -36,16 +37,16 @@
     });
 
     $app->post('/post[/]', function (Request $request, Response $response, array $args) {
-        /* FORM-DATA*/
+        FORM-DATA
         $valor= $request->getParsedBody();
         $response->getBody()->write($valor["user"]." ".$valor["contra"]);
         return $response;
-        /*JSON
+        JSON
         $valor=$request->getBody();
         $valor2=json_decode($valor);
         $response->getBody()->write($valor2);
-        return $response;*/
-    });
+        return $response;
+    });*/
 
     $app->get('[/]', function (Request $request, Response $response, array $args) {
         $response->getBody()->write("Utilizando slim framework");
@@ -53,6 +54,10 @@
     });
 
     $app->post('/login[/]', \UsuarioController::class . ':obtenerTodos');
+
+    $app->group('/turno', function (RouteCollectorProxy $group) {
+        $group->post('/crear[/]', \TurnoController::class . ':crearTurnos' );
+    });
 
     $app->run();
 
