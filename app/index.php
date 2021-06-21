@@ -12,6 +12,7 @@
     require __DIR__ . '/../vendor/autoload.php';
     require __DIR__ . '/controllers/usuarioControllers.php';
     require __DIR__ . '/controllers/turnosControllers.php';
+    require __DIR__ . '/controllers/serviciosControllers.php';
     require __DIR__ . '/DB/accesoDatos.php';
 
     $app = AppFactory::create();
@@ -29,13 +30,13 @@
         return $response;
     });
 
-    /*$app->get('/hello/{name}/{apellido}', function (Request $request, Response $response, array $args) {
+    $app->get('/hello/{name}/{apellido}', function (Request $request, Response $response, array $args) {
         $name = $args['name'];
         $apellido = $args['apellido'];
         $response->getBody()->write("Hello, $name $apellido");
         return $response;
     });
-
+/*
     $app->post('/post[/]', function (Request $request, Response $response, array $args) {
         FORM-DATA
         $valor= $request->getParsedBody();
@@ -54,6 +55,8 @@
     });
 
     $app->post('/login[/]', \UsuarioController::class . ':obtenerTodos');
+
+    $app->get('/servicios', \ServicioController::class . ':ObtenerTodos');
 
     $app->group('/turno', function (RouteCollectorProxy $group) {
         $group->post('/crear[/]', \TurnoController::class . ':crearTurnos' );
