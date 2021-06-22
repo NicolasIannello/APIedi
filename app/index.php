@@ -56,7 +56,7 @@
 
     $app->post('/login[/]', \UsuarioController::class . ':obtenerTodos');
 
-    $app->get('/servicios', \ServicioController::class . ':ObtenerTodos');
+    $app->get('/servicios[/]', \ServicioController::class . ':ObtenerTodos');
 
     $app->group('/turno', function (RouteCollectorProxy $group) {
         $group->post('/crear[/]', \TurnoController::class . ':crearTurnos' );
