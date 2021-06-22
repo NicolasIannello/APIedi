@@ -12,12 +12,12 @@
             $turnos=$consulta->fetchAll(PDO::FETCH_OBJ);
 
             $band="No encontrados";
-
+            /*
             foreach($turnos as $turno){
                 if($datos["HoraInicio"]==$turno->HorarioInicio && $datos["HoraFin"]==$turno->HorarioFin){
                     $band="Turno ya existente";
                 }
-            }
+            }*/
 
             if($band=="No encontrados"){
                 $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO PaqueteTurno (EmpresaID,ServicioID,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday,DiaFinalizacion,DuracionMinima,DuracionMaxima,Capacidad,HorarioInicio,HorarioFin) VALUES (:Emp,:serv,:M,:Tu,:W,:Th,:F,:Sa,:Su,:DF,:DMi,:DMa,:C,:HI,:HF)");
@@ -32,20 +32,8 @@
             $consulta->execute();
             $turnos=$consulta->fetchAll(PDO::FETCH_OBJ);
 
-            
-            foreach($turnos as $turno){
-                $datos["paqueteID"]=$turno->PaqueteID;
-                $datos["servicio"]=$turno->ServicioID;
-                $datos["empresa"]=$turno->EmpresaID;
-                $datos["FechaFin"]=$turno->DiaFinalizacion;
-                $datos["HoraInicio"]=$turno->HorarioInicio;
-                $datos["HoraFin"]=$turno->HorarioFin;
-            }
-
-
-            $response->getBody()->Write(json_encode($datos));
+            $response->getBody()->Write(json_encode($turnos));
             return $response;
         }
     }
-    
 ?>
