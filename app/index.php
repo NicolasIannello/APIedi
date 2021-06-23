@@ -60,8 +60,8 @@
 
     $app->group('/turno', function (RouteCollectorProxy $group) {
         $group->post('/crear[/]', \TurnoController::class . ':crearTurnos' );
+        $group->get('/cargar[/]', \TurnoController::class . ':cargarTurnos' );
     });
 
     $app->run();
-
 ?>

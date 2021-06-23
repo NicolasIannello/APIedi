@@ -27,7 +27,17 @@
                 $response->getBody()->Write(json_encode($band));
                 return $response;
             }
+            
+            $consulta=$objAccesoDatos->prepararConsulta("SELECT * FROM PaqueteTurno");
+            $consulta->execute();
+            $turnos=$consulta->fetchAll(PDO::FETCH_OBJ);
 
+            $response->getBody()->Write(json_encode($turnos));
+            return $response;
+        }
+
+        function cargarTurnos($request,$response,$arg){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta=$objAccesoDatos->prepararConsulta("SELECT * FROM PaqueteTurno");
             $consulta->execute();
             $turnos=$consulta->fetchAll(PDO::FETCH_OBJ);
