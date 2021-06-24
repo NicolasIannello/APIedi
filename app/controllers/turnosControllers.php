@@ -45,5 +45,20 @@
             $response->getBody()->Write(json_encode($turnos));
             return $response;
         }
+
+        function eliminarTurno($request,$response,$arg){
+            $datos= $request->getParsedBody();
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta=$objAccesoDatos->prepararConsulta("DELETE FROM PaqueteTurno WHERE PaqueteID=:id");
+
+            $consulta->execute(array(':id'=>(int)$datos["dato"]));
+
+            $consulta=$objAccesoDatos->prepararConsulta("SELECT * FROM PaqueteTurno");
+            $consulta->execute();
+            $turnos=$consulta->fetchAll(PDO::FETCH_OBJ);
+
+            $response->getBody()->Write(json_encode($turnos));
+            return $response;
+        }
     }
 ?>

@@ -24,7 +24,7 @@
         $requestHeaders = $request->getHeaderLine('Access-Control-Request-Headers');
 
         $response = $response->withHeader('Access-Control-Allow-Origin', '*');
-        $response = $response->withHeader('Access-Control-Allow-Methods', 'get,post,option');
+        $response = $response->withHeader('Access-Control-Allow-Methods', 'get,post,option,delete');
         $response = $response->withHeader('Access-Control-Allow-Headers', $requestHeaders);
 
         return $response;
@@ -61,6 +61,7 @@
     $app->group('/turno', function (RouteCollectorProxy $group) {
         $group->post('/crear[/]', \TurnoController::class . ':crearTurnos' );
         $group->get('/cargar[/]', \TurnoController::class . ':cargarTurnos' );
+        $group->post('/eliminar[/]', \TurnoController::class . ':eliminarTurno' );
     });
 
     $app->run();
