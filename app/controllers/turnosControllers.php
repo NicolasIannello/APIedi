@@ -28,11 +28,11 @@
                 return $response;
             }
 
-            /*$consulta=$objAccesoDatos->prepararConsulta("SELECT * FROM PaqueteTurno");
+            $consulta=$objAccesoDatos->prepararConsulta("SELECT * FROM PaqueteTurno");
             $consulta->execute();
             $turnos=$consulta->fetchAll(PDO::FETCH_OBJ);
-            */
-            $response->getBody()->Write(json_encode(cargarTurnos()));
+            
+            $response->getBody()->Write(json_encode($turnos));
             return $response;
         }
 
