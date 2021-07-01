@@ -31,7 +31,7 @@
             /*$consulta=$objAccesoDatos->prepararConsulta("SELECT * FROM PaqueteTurno");
             $consulta->execute();
             $turnos=$consulta->fetchAll(PDO::FETCH_OBJ);*/
-            $turnos=turno::ObtenetTodos();
+            $turnos=turno::ObtenerTodos();
             
             $response->getBody()->Write(json_encode($turnos));
             return $response;
