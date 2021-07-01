@@ -2,7 +2,7 @@
 
     class turno{
 
-        public function ObtenerTodos(){
+        public static function ObtenerTodos(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM PaqueteTurno");
             $consulta->execute();
@@ -10,15 +10,15 @@
             return $turnos;
         }
 
-        public function Eliminar($dat){
+        public static function Eliminar($dat){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta=$objAccesoDatos->prepararConsulta("DELETE FROM PaqueteTurno WHERE PaqueteID=:id");
 
             $consulta->execute(array(':id'=>(int)$dat["dato"]));
         }
 
-        public function Cargar($dat){
-            
+        public static function Cargar($dat){
+
         }
     }
 

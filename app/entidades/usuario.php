@@ -2,7 +2,7 @@
 
     class usuario{
 
-        public function ObtenerTodos(){
+        public static function ObtenerTodos(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM Usuarios");
             $consulta->execute();
