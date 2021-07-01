@@ -16,6 +16,7 @@
     require __DIR__ . '/DB/accesoDatos.php';
     require __DIR__ . '/entidades/usuario.php';
     require __DIR__ . '/entidades/turno.php';
+    require __DIR__ . '/entidades/servicio.php';
 
     $app = AppFactory::create();
 
