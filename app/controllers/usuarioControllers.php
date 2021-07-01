@@ -3,10 +3,11 @@
 
         function obtenerTodos($request,$response,$arg){
 
-            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            /*$objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM Usuarios");
             $consulta->execute();
-            $usuarios=$consulta->fetchAll(PDO::FETCH_OBJ);
+            $usuarios=$consulta->fetchAll(PDO::FETCH_OBJ);*/
+            $usuarios= usuario::obtenerTodos();
             $band="Datos incorrectos";
             $datos= $request->getParsedBody();
             

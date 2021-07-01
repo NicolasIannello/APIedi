@@ -14,6 +14,8 @@
     require __DIR__ . '/controllers/turnosControllers.php';
     require __DIR__ . '/controllers/serviciosControllers.php';
     require __DIR__ . '/DB/accesoDatos.php';
+    require __DIR__ . '/entidades/usuario.php';
+    require __DIR__ . '/entidades/turno.php';
 
     $app = AppFactory::create();
 

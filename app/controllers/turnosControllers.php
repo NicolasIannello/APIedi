@@ -37,26 +37,27 @@
         }
 
         function cargarTurnos($request,$response,$arg){
-            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            /*$objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta=$objAccesoDatos->prepararConsulta("SELECT * FROM PaqueteTurno");
             $consulta->execute();
-            $turnos=$consulta->fetchAll(PDO::FETCH_OBJ);
-
+            $turnos=$consulta->fetchAll(PDO::FETCH_OBJ);*/
+            $turnos=turno::ObtenerTodos();
             $response->getBody()->Write(json_encode($turnos));
             return $response;
         }
 
         function eliminarTurno($request,$response,$arg){
             $datos= $request->getParsedBody();
-            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            turno::Eliminar($datos);
+            /*$objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta=$objAccesoDatos->prepararConsulta("DELETE FROM PaqueteTurno WHERE PaqueteID=:id");
 
-            $consulta->execute(array(':id'=>(int)$datos["dato"]));
+            $consulta->execute(array(':id'=>(int)$datos["dato"]));*/
 
-            $consulta=$objAccesoDatos->prepararConsulta("SELECT * FROM PaqueteTurno");
+            /*$consulta=$objAccesoDatos->prepararConsulta("SELECT * FROM PaqueteTurno");
             $consulta->execute();
-            $turnos=$consulta->fetchAll(PDO::FETCH_OBJ);
-
+            $turnos=$consulta->fetchAll(PDO::FETCH_OBJ);*/
+            $turnos=turno::ObtenerTodos();
             $response->getBody()->Write(json_encode($turnos));
             return $response;
         }
