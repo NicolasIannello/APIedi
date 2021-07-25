@@ -2,11 +2,6 @@
     class UsuarioController{
 
         function obtenerTodos($request,$response,$arg){
-
-            /*$objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM Usuarios");
-            $consulta->execute();
-            $usuarios=$consulta->fetchAll(PDO::FETCH_OBJ);*/
             $usuarios= usuario::obtenerTodos();
             $band="Datos incorrectos";
             $datos= $request->getParsedBody();
@@ -17,7 +12,6 @@
                 }
             }
 
-            //echo $datos["user"]."<br>".$datos["contra"]."<br>sadadsa";
             $response->getBody()->Write(json_encode($band));
             return $response;
         }

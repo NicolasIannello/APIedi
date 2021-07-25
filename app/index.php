@@ -39,18 +39,6 @@
         $response->getBody()->write("Hello, $name $apellido");
         return $response;
     });
-/*
-    $app->post('/post[/]', function (Request $request, Response $response, array $args) {
-        FORM-DATA
-        $valor= $request->getParsedBody();
-        $response->getBody()->write($valor["user"]." ".$valor["contra"]);
-        return $response;
-        JSON
-        $valor=$request->getBody();
-        $valor2=json_decode($valor);
-        $response->getBody()->write($valor2);
-        return $response;
-    });*/
 
     $app->get('[/]', function (Request $request, Response $response, array $args) {
         $response->getBody()->write("Utilizando slim framework");
