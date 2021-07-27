@@ -4,7 +4,7 @@
 
         public static function ObtenerTodos(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM Turno");
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT TU.PaqueteID as 'Codigo agrupador',TU.TurnoID as 'ID Turno particular',TU.Dia as 'Fecha',SE.Descripcion as 'Servicio',TU.Horario as 'Horario Turno',TU.Cupos as 'Cupos disponibles' FROM Turno as TU,PaqueteTurno as PT,Servicios as SE WHERE TU.PaqueteID=PT.PaqueteID && PT.ServicioID=SE.ServicioID");
             $consulta->execute();
             $turnos=$consulta->fetchAll(PDO::FETCH_OBJ);
             return $turnos;
@@ -12,9 +12,20 @@
 
         public static function Eliminar($dat){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta=$objAccesoDatos->prepararConsulta("DELETE FROM PaqueteTurno WHERE PaqueteID=:id");
-
-            $consulta->execute(array(':id'=>(int)$dat["dato"]));
+            switch($dat["tipo"]){
+                case 'PaqueteID':
+                    $consulta=$objAccesoDatos->prepararConsulta("DELETE PT,TU FROM PaqueteTurno as PT JOIN Turno as TU ON PT.PaqueteID=TU.PaqueteID WHERE PT.PaqueteID=:dato");
+                    $consulta->execute(array(':dato'=>(int)$dat["dato"]));
+                    break;
+                case 'TurnoID':
+                    $consulta=$objAccesoDatos->prepararConsulta("DELETE FROM Turno WHERE TurnoID=:dato");
+                    $consulta->execute(array(':dato'=>(int)$dat["dato"]));
+                    break;
+                case 'Dia':
+                    $consulta=$objAccesoDatos->prepararConsulta("DELETE FROM Turno WHERE Dia=:dato");
+                    $consulta->execute(array(':dato'=>$dat["dato"]));
+                    break;
+            }
         }
 
         public static function Crear($dat){
