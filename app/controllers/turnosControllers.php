@@ -3,10 +3,14 @@
 
         function crearTurnos($request,$response,$arg){
             $datos= $request->getParsedBody();
-            turno::Crear($datos);
-            $turnos=turno::ObtenerTodos();
-            $response->getBody()->Write(json_encode($turnos));
-            return $response;
+            if(turno::Crear($datos)=="superpuesto"){
+                $response->getBody()->Write(json_encode("superpuesto"));
+                return $response;    
+            }else{
+                $turnos=turno::ObtenerTodos();
+                $response->getBody()->Write(json_encode($turnos));
+                return $response;
+            }
         }
 
         function cargarTurnos($request,$response,$arg){
