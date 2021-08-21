@@ -21,10 +21,13 @@
 
         function eliminarTurno($request,$response,$arg){
             $datos= $request->getParsedBody();
-            turno::Eliminar($datos);
-            $turnos=turno::ObtenerTodos();
-            $response->getBody()->Write(json_encode($turnos));
-            return $response;
-        }
+            if(turno::Eliminar($datos)=="no encontrado"){
+                $response->getBody()->Write(json_encode("no encontrado"));
+                return $response;    
+            }else{
+                $turnos=turno::ObtenerTodos();
+                $response->getBody()->Write(json_encode($turnos));
+                return $response;    
+            }}
     }
 ?>

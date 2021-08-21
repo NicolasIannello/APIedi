@@ -4,8 +4,8 @@
 
         public static function ObtenerTodos(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT TU.PaqueteID as 'Codigo agrupador',TU.TurnoID as 'ID Turno particular',TU.Dia as 'Fecha',SE.Descripcion as 'Servicio',TU.Horario as 'Horario Turno',TU.Cupos as 'Cupos disponibles' FROM Turno as TU,PaqueteTurno as PT,Servicios as SE WHERE TU.PaqueteID=PT.PaqueteID && PT.ServicioID=SE.ServicioID");
-            $consulta->execute();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT TU.PaqueteID as 'Codigo agrupador',TU.TurnoID as 'ID Turno particular',TU.Dia as 'Fecha',SE.Descripcion as 'Servicio',TU.Horario as 'Horario Turno',TU.Cupos as 'Cupos disponibles' FROM Turno as TU,PaqueteTurno as PT,Servicios as SE WHERE TU.PaqueteID=PT.PaqueteID && PT.ServicioID=SE.ServicioID && PT.EmpresaID=:emp");
+            $consulta->execute(array(':emp'=>1));
             $turnos=$consulta->fetchAll(PDO::FETCH_OBJ);
             return $turnos;
         }
@@ -14,16 +14,68 @@
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             switch($dat["tipo"]){
                 case 'PaqueteID':
-                    $consulta=$objAccesoDatos->prepararConsulta("DELETE PT,TU FROM PaqueteTurno as PT JOIN Turno as TU ON PT.PaqueteID=TU.PaqueteID WHERE PT.PaqueteID=:dato");
+                    $consulta=$objAccesoDatos->prepararConsulta("SELECT PaqueteID FROM Turno WHERE PaqueteID=:dato GROUP BY PaqueteID ORDER BY PaqueteID");
                     $consulta->execute(array(':dato'=>(int)$dat["dato"]));
+                    $fetcht=$consulta->fetchAll(PDO::FETCH_OBJ);
+                    $cant=count($fetcht);
+                    if ($cant == 1) { 
+                        $consulta=$objAccesoDatos->prepararConsulta("DELETE PT,TU FROM PaqueteTurno as PT JOIN Turno as TU ON PT.PaqueteID=TU.PaqueteID WHERE PT.PaqueteID=:dato");
+                        $consulta->execute(array(':dato'=>(int)$dat["dato"]));
+                    }else{
+                        return "no encontrado";
+                    }
                     break;
                 case 'TurnoID':
-                    $consulta=$objAccesoDatos->prepararConsulta("DELETE FROM Turno WHERE TurnoID=:dato");
+                    $consulta=$objAccesoDatos->prepararConsulta("SELECT PaqueteID FROM Turno WHERE TurnoID=:dato");
                     $consulta->execute(array(':dato'=>(int)$dat["dato"]));
+                        
+                    $paquete=$consulta->fetchAll(PDO::FETCH_COLUMN, 0);
+                    if(count($paquete)>0){
+                        $PID=(int)$paquete[0];
+                    }else{
+                        $PID=0;
+                    }
+                    
+                    $consulta=$objAccesoDatos->prepararConsulta("SELECT * FROM Turno WHERE PaqueteID=:dato");
+                    $consulta->execute(array(':dato'=>$PID));
+
+                    $fetcht=$consulta->fetchAll(PDO::FETCH_OBJ);
+                    $cant=count($fetcht);
+                    if ($cant == 1) { 
+                        $consulta=$objAccesoDatos->prepararConsulta("DELETE PT,TU FROM PaqueteTurno as PT JOIN Turno as TU ON PT.PaqueteID=TU.PaqueteID WHERE TU.TurnoID=:dato");
+                        $consulta->execute(array(':dato'=>(int)$dat["dato"]));
+                    }else if($cant==0){
+                        return "no encontrado";
+                    }else{
+                        $consulta=$objAccesoDatos->prepararConsulta("DELETE FROM Turno WHERE TurnoID=:dato");
+                        $consulta->execute(array(':dato'=>(int)$dat["dato"]));
+                    }
                     break;
                 case 'Dia':
-                    $consulta=$objAccesoDatos->prepararConsulta("DELETE FROM Turno WHERE Dia=:dato");
+                    $consulta=$objAccesoDatos->prepararConsulta("SELECT PaqueteID FROM Turno WHERE Dia=:dato");
                     $consulta->execute(array(':dato'=>$dat["dato"]));
+                    
+                    $paquete=$consulta->fetchAll(PDO::FETCH_COLUMN, 0);
+                    if(count($paquete)>0){
+                        $PID=(int)$paquete[0];
+                    }else{
+                        $PID=0;
+                    }
+                    
+                    $consulta=$objAccesoDatos->prepararConsulta("SELECT Dia FROM Turno WHERE PaqueteID=:dato GROUP BY Dia ORDER BY Dia");
+                    $consulta->execute(array(':dato'=>$PID));
+
+                    $fetcht=$consulta->fetchAll(PDO::FETCH_OBJ);
+                    $cant=count($fetcht);
+                    if ($cant == 1) { 
+                        $consulta=$objAccesoDatos->prepararConsulta("DELETE PT,TU FROM PaqueteTurno as PT JOIN Turno as TU ON PT.PaqueteID=TU.PaqueteID WHERE TU.Dia=:dato");
+                        $consulta->execute(array(':dato'=>$dat["dato"]));
+                    }else if($cant==0){
+                        return "no encontrado";
+                    }else{
+                        $consulta=$objAccesoDatos->prepararConsulta("DELETE FROM Turno WHERE Dia=:dato");
+                        $consulta->execute(array(':dato'=>$dat["dato"]));
+                    }
                     break;
             }
         }
@@ -88,7 +140,7 @@
                 $selectsql.="Sunday=:Su ";
                 $arraysql[':Su']=$dat["Sunday"];
             }
-            $selectsql.=") && ( ( HorarioInicio<:HI && HorarioFin>:HI2 ) || ( HorarioInicio<:HF && HorarioFin>:HF2 ) || ( HorarioInicio>:HI3 && HorarioFin<:HF3 ) )";
+            $selectsql.=") && ( ( HorarioInicio<=:HI && HorarioFin>=:HI2 ) || ( HorarioInicio<=:HF && HorarioFin>=:HF2 ) || ( HorarioInicio>=:HI3 && HorarioFin<=:HF3 ) )";
             $arraysql[':HI']=$dat["HoraInicio"];
             $arraysql[':HI2']=$dat["HoraInicio"];
             $arraysql[':HI3']=$dat["HoraInicio"];
@@ -178,6 +230,10 @@
             }else{ 
                 return "superpuesto";
             }
+        }
+
+        public static function ReportarEliminacion(){
+
         }
     }
 
