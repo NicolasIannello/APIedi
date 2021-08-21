@@ -8,9 +8,6 @@
     use Slim\Factory\AppFactory;
     use Slim\Routing\RouteCollectorProxy;
     use Slim\Routing\RouteContext;
-    use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\SMTP;
-    use PHPMailer\PHPMailer\Exception;
 
     require __DIR__ . '/../vendor/autoload.php';
     require __DIR__ . '/controllers/usuarioControllers.php';
