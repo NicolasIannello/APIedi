@@ -16,7 +16,7 @@
         public static function Eliminar($dat){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             switch($dat["tipo"]){
-                case 'PaqueteID':
+                case 'Codigo agrupador':
                     $consulta=$objAccesoDatos->prepararConsulta("SELECT PaqueteID FROM Turno WHERE PaqueteID=:dato GROUP BY PaqueteID ORDER BY PaqueteID");
                     $consulta->execute(array(':dato'=>(int)$dat["dato"]));
                     $fetcht=$consulta->fetchAll(PDO::FETCH_OBJ);
@@ -28,7 +28,7 @@
                         return "no encontrado";
                     }
                     break;
-                case 'TurnoID':
+                case 'ID Turno particular':
                     $consulta=$objAccesoDatos->prepararConsulta("SELECT PaqueteID FROM Turno WHERE TurnoID=:dato");
                     $consulta->execute(array(':dato'=>(int)$dat["dato"]));
                         
@@ -54,7 +54,7 @@
                         $consulta->execute(array(':dato'=>(int)$dat["dato"]));
                     }
                     break;
-                case 'Dia':
+                case 'Fecha':
                     $consulta=$objAccesoDatos->prepararConsulta("SELECT PaqueteID FROM Turno WHERE Dia=:dato");
                     $consulta->execute(array(':dato'=>$dat["dato"]));
                     
@@ -81,6 +81,7 @@
                     }
                     break;
             }
+            turno::ReportarEliminacion($dat['tipo'],$dat['dato'],$fetcht);
         }
 
         public static function Crear($dat){
@@ -235,31 +236,26 @@
             }
         }
 
-        public static function ReportarEliminacion(){
+        public static function ReportarEliminacion($tipo,$dato,$turnos){
             $mail = new PHPMailer(true);
-            //Server settings
-            //$mail->SMTPDebug  = SMTP::DEBUG_SERVER;                   //Enable verbose debug output
-            $mail->isSMTP();                                            //Send using SMTP
-            $mail->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
-            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $mail->Username   = 'GestorDeTurnosOnline@gmail.com';       //SMTP username
-            $mail->Password   = 'gestordeturnos';                       //SMTP password
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
             
-            //Recipients
+            //$mail->SMTPDebug  = SMTP::DEBUG_SERVER;                   
+            $mail->isSMTP();                                            
+            $mail->Host='smtp.gmail.com';                       
+            $mail->SMTPAuth=true;                                   
+            $mail->Username='GestorDeTurnosOnline@gmail.com';       
+            $mail->Password='gestordeturnos';                       
+            $mail->SMTPSecure=PHPMailer::ENCRYPTION_SMTPS;            
+            $mail->Port=465;                                    
+            
             $mail->setFrom('GestorDeTurnosOnline@gmail.com', 'Gestor de Turnos');
-            //$mail->addAddress('joe@example.net', 'Joe User');   //Add a recipient
-            $mail->addAddress('42292048@ITBELTRAN.COM.AR');       //Name is optional
+            $mail->addAddress('42292048@ITBELTRAN.COM.AR');
             $mail->addReplyTo('GestorDeTurnosOnline@gmail.com', 'Gestor de Turnos');
-            //$mail->addCC('cc@example.com');
-            //$mail->addBCC('bcc@example.com');
             
-            //Content
-            $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = 'Here is the subject';
-            $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
+            $mail->isHTML(true);
+            $mail->Subject='Se han eliminado uno o varios turnos';
+            $mail->Body='Se han eliminado los turnos vinculados a el/la <b>'.$tipo.'</b> con los valores de <b>'.$dato;
+            $mail->AltBody='This is the body in plain text for non-HTML mail clients';
 
             $mail->send();
         }
