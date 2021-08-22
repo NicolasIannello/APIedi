@@ -25,7 +25,7 @@
                 $response->getBody()->Write(json_encode("no encontrado"));
                 return $response;    
             }else{
-                turno::ReportarEliminacion();
+                //turno::ReportarEliminacion();
                 $turnos=turno::ObtenerTodos();
                 $response->getBody()->Write(json_encode($turnos));
                 return $response;    
