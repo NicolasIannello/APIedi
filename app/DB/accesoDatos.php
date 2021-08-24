@@ -6,11 +6,7 @@
 
         private function __construct(){
             try {
-                $conexion='mysql:host='.getenv('SERVER').':3306;dbname='.getenv('DB').';charset=utf8';
-                $user=getenv('USER'); $pass=getenv('PASSWORD');
-                var_dump($conexion.'  '.$user.'  '.$pass.'  ');
-                $this->objetoPDO = new PDO($conexion, $user, $pass, array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-                //$this->objetoPDO = new PDO('mysql:host='.getenv('SERVER').':3306;dbname='.getenv('DB').';charset=utf8',getenv('USER'),getenv('PASSWORD'), array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+                $this->objetoPDO = new PDO('mysql:host='.getenv('SERVER').':3306;dbname='.getenv('DB').';charset=utf8', getenv('USER') , getenv('PASSWORD') , array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
                 //$this->objetoPDO = new PDO('mysql:host=remotemysql.com:3306;dbname=rVG5xriVSC;charset=utf8', 'rVG5xriVSC', 'Vxc2D8cLx2', array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
                 $this->objetoPDO->exec("SET CHARACTER SET utf8");
             } catch (PDOException $e) {
