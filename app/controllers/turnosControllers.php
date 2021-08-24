@@ -28,6 +28,24 @@
                 $turnos=turno::ObtenerTodos();
                 $response->getBody()->Write(json_encode($turnos));
                 return $response;    
-            }}
+            }
+        }
+
+        function cargarCliente($request,$response,$arg){
+            $datos= $request->getParsedBody();
+            $res=turno::clienteCargar($datos);
+            if($res==null){
+
+            }else{
+                $response->getBody()->Write(json_encode($res));
+                return $response;
+            }
+        }
+
+        function tablaCliente($request,$response,$arg){
+            $turnos=turno::ObtenerClientes();
+            $response->getBody()->Write(json_encode($turnos));
+            return $response;
+        }
     }
 ?>

@@ -238,7 +238,7 @@
 
         public static function ReportarEliminacion($tipo,$dato,$turnos){
             $mail = new PHPMailer(true);
-            
+            // http://www.google.com/accounts/DisplayUnlockCaptcha
             //$mail->SMTPDebug  = SMTP::DEBUG_SERVER;                   
             $mail->isSMTP();                                            
             $mail->Host='smtp.gmail.com';                       
@@ -255,9 +255,65 @@
             $mail->isHTML(true);
             $mail->Subject='Se han eliminado uno o varios turnos';
             $mail->Body='Se han eliminado los turnos vinculados a el/la <b>'.$tipo.'</b> con los valores de <b>'.$dato;
-            $mail->AltBody='This is the body in plain text for non-HTML mail clients';
+            $mail->AltBody='Se han eliminado los turnos vinculados a el/la '.$tipo.' con los valores de '.$dato;
 
             $mail->send();
+        }
+
+        public static function clienteCargar($dat){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta=$objAccesoDatos->prepararConsulta("SELECT CL.ClienteID FROM Usuarios as US, Clientes as CL WHERE US.NombreUsuario=:user && US.Tipo='cliente'");
+            $consulta->execute(array(':user'=>$dat["cliente"]));
+
+            $fetcht=$consulta->fetchAll(PDO::FETCH_OBJ);
+            $res=count($fetcht);
+
+            if($res==0){
+                return "Usuario no encontrado";
+            }else{
+                $consulta=$objAccesoDatos->prepararConsulta("SELECT CL.ClienteID FROM Usuarios as US, Clientes as CL WHERE US.NombreUsuario=:user && US.Tipo='cliente'");
+                $consulta->execute(array(':user'=>$dat["cliente"]));
+                $resultado=$consulta->fetchAll(PDO::FETCH_COLUMN, 0);
+                $clienteID=(int)$resultado[0];
+                
+
+                $consulta = $objAccesoDatos->prepararConsulta("SELECT TU.TurnoID FROM Turno as TU, PaqueteTurno as PT WHERE TU.PaqueteID=PT.PaqueteID && PT.ServicioID=:serv && TU.Dia=:dia && TU.Horario=:horario && TU.Cupos>=1");
+                $consulta->execute(array(':serv'=>(int)$dat["servicio"],':dia'=>$dat["fecha"],':horario'=>$dat["time"]));
+                
+                $resultado2=$consulta->fetchAll(PDO::FETCH_COLUMN, 0);
+                $turnoID=(int)$resultado2[0];
+                               
+                $consulta = $objAccesoDatos->prepararConsulta("SELECT TU.TurnoID FROM Turno as TU, PaqueteTurno as PT WHERE TU.PaqueteID=PT.PaqueteID && PT.ServicioID=:serv && TU.Dia=:dia && TU.Horario=:horario && TU.Cupos>=1");
+                $consulta->execute(array(':serv'=>(int)$dat["servicio"],':dia'=>$dat["fecha"],':horario'=>$dat["time"]));
+                $fetcht=$consulta->fetchAll(PDO::FETCH_OBJ);
+                $res=count($fetcht);
+                
+                if($res==0){
+                    return "No se encontro un turno disponible";
+                }else{
+                    $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM TurnoClienteEmpresa WHERE ClienteID=:clie && TurnoID=:turn");
+                    $consulta->execute(array(':clie'=>$clienteID,':turn'=>$turnoID));
+                    $fetcht=$consulta->fetchAll(PDO::FETCH_OBJ);
+                    $res=count($fetcht);
+                    if($res>0){
+                        return "Ya existe un turno vinculado a esa cuenta en dicho horario";
+                    }else{
+                        $consulta = $objAccesoDatos->prepararConsulta("UPDATE `Turno` as TU, PaqueteTurno as PT SET TU.Cupos=TU.Cupos-1 WHERE TU.PaqueteID=PT.PaqueteID && PT.ServicioID=:serv && TU.Dia=:dia && TU.Horario=:horario && TU.Cupos>=1");
+                        $consulta->execute(array(':serv'=>(int)$dat["servicio"],':dia'=>$dat["fecha"],':horario'=>$dat["time"]));
+
+                        $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO TurnoClienteEmpresa (ClienteID,TurnoID) VALUES (:clienteID,:turnoID)");
+                        $consulta->execute(array(':clienteID'=>$clienteID,':turnoID'=>$turnoID));
+                    }
+                }
+            }
+        }
+
+        public static function ObtenerClientes(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT TU.Dia as 'Fecha', SE.Descripcion as 'Servicio', TU.Horario as 'Horario turno', US.NombreUsuario as 'Cliente' FROM Turno as TU,PaqueteTurno as PT,Usuarios as US, Clientes as CL, Servicios as SE,TurnoClienteEmpresa as TCE WHERE TU.TurnoID=TCE.TurnoID && US.Tipo='cliente' && SE.ServicioID=PT.ServicioID && PT.EmpresaID=:emp");
+            $consulta->execute(array(':emp'=>1));
+            $turnos=$consulta->fetchAll(PDO::FETCH_OBJ);
+            return $turnos;
         }
     }
 

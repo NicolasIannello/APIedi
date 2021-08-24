@@ -53,6 +53,8 @@
         $group->post('/crear[/]', \TurnoController::class . ':crearTurnos' );
         $group->get('/cargar[/]', \TurnoController::class . ':cargarTurnos' );
         $group->post('/eliminar[/]', \TurnoController::class . ':eliminarTurno' );
+        $group->post('/turnoCliente[/]', \TurnoController::class . ':cargarCliente' );
+        $group->post('/clienteCargar[/]', \TurnoController::class . ':tablaCliente' );
     });
 
     $app->run();
