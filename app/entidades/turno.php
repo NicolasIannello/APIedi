@@ -243,8 +243,8 @@
             $mail->isSMTP();                                            
             $mail->Host='smtp.gmail.com';                       
             $mail->SMTPAuth=true;                                   
-            $mail->Username='GestorDeTurnosOnline@gmail.com';       
-            $mail->Password='gestordeturnos';                       
+            $mail->Username=getenv('mail');       
+            $mail->Password=getenv('mailpass');                       
             $mail->SMTPSecure=PHPMailer::ENCRYPTION_SMTPS;            
             $mail->Port=465;                                    
             
