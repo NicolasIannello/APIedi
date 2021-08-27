@@ -22,7 +22,7 @@
                     $fetcht=$consulta->fetchAll(PDO::FETCH_OBJ);
                     $cant=count($fetcht);
                     if ($cant == 1) { 
-                        $consulta=$objAccesoDatos->prepararConsulta("DELETE PT,TU,TCE FROM PaqueteTurno as PT JOIN Turno as TU ON PT.PaqueteID=TU.PaqueteID JOIN TurnoClienteEmpresa as TCE JOIN TU.TurnoID=TCE.TurnoID WHERE PT.PaqueteID=:dato");
+                        $consulta=$objAccesoDatos->prepararConsulta("DELETE PT,TU,TCE FROM PaqueteTurno as PT JOIN Turno as TU ON PT.PaqueteID=TU.PaqueteID JOIN TurnoClienteEmpresa as TCE on TU.TurnoID=TCE.TurnoID WHERE PT.PaqueteID=:dato");
                         $consulta->execute(array(':dato'=>(int)$dat["dato"]));
                     }else{
                         return "no encontrado";
@@ -45,7 +45,7 @@
                     $fetcht=$consulta->fetchAll(PDO::FETCH_OBJ);
                     $cant=count($fetcht);
                     if ($cant == 1) { 
-                        $consulta=$objAccesoDatos->prepararConsulta("DELETE PT,TU,TCE FROM PaqueteTurno as PT JOIN Turno as TU ON PT.PaqueteID=TU.PaqueteID JOIN TurnoClienteEmpresa as TCE JOIN TU.TurnoID=TCE.TurnoID WHERE TU.TurnoID=:dato");
+                        $consulta=$objAccesoDatos->prepararConsulta("DELETE PT,TU,TCE FROM PaqueteTurno as PT JOIN Turno as TU ON PT.PaqueteID=TU.PaqueteID JOIN TurnoClienteEmpresa as TCE ON TU.TurnoID=TCE.TurnoID WHERE TU.TurnoID=:dato");
                         $consulta->execute(array(':dato'=>(int)$dat["dato"]));
                     }else if($cant==0){
                         return "no encontrado";
@@ -71,12 +71,12 @@
                     $fetcht=$consulta->fetchAll(PDO::FETCH_OBJ);
                     $cant=count($fetcht);
                     if ($cant == 1) { 
-                        $consulta=$objAccesoDatos->prepararConsulta("DELETE PT,TU,TCE FROM PaqueteTurno as PT JOIN Turno as TU ON PT.PaqueteID=TU.PaqueteID JOIN TurnoClienteEmpresa as TCE JOIN TU.TurnoID=TCE.TurnoID WHERE TU.Dia=:dato");
+                        $consulta=$objAccesoDatos->prepararConsulta("DELETE PT,TU,TCE FROM PaqueteTurno as PT JOIN Turno as TU ON PT.PaqueteID=TU.PaqueteID JOIN TurnoClienteEmpresa as TCE on TU.TurnoID=TCE.TurnoID WHERE TU.Dia=:dato");
                         $consulta->execute(array(':dato'=>$dat["dato"]));
                     }else if($cant==0){
                         return "no encontrado";
                     }else{
-                        $consulta=$objAccesoDatos->prepararConsulta("DELETE TU,TCE FROM Turno as TU JOIN TurnoClienteEmpresa as TCE JOIN TU.TurnoID=TCE.TurnoID WHERE Dia=:dato");
+                        $consulta=$objAccesoDatos->prepararConsulta("DELETE TU,TCE FROM Turno as TU JOIN TurnoClienteEmpresa as TCE on TU.TurnoID=TCE.TurnoID WHERE Dia=:dato");
                         $consulta->execute(array(':dato'=>$dat["dato"]));
                     }
                     break;
