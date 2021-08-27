@@ -310,7 +310,7 @@
 
         public static function ObtenerClientes(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT TU.Dia as 'Fecha', SE.Descripcion as 'Servicio', TU.Horario as 'Horario turno', US.NombreUsuario as 'Cliente' FROM Turno as TU,PaqueteTurno as PT,Usuarios as US, Clientes as CL, Servicios as SE,TurnoClienteEmpresa as TCE WHERE TU.TurnoID=TCE.TurnoID && US.Tipo='cliente' && SE.ServicioID=PT.ServicioID && PT.EmpresaID=:emp");
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT DISTINCT  TU.Dia as 'Fecha', SE.Descripcion as 'Servicio', TU.Horario as 'Horario turno', US.NombreUsuario as 'Cliente' FROM Turno as TU,PaqueteTurno as PT,Usuarios as US, Clientes as CL, Servicios as SE,TurnoClienteEmpresa as TCE WHERE TU.TurnoID=TCE.TurnoID && US.Tipo='cliente' && SE.ServicioID=PT.ServicioID && PT.EmpresaID=:emp");
             $consulta->execute(array(':emp'=>1));
             $turnos=$consulta->fetchAll(PDO::FETCH_OBJ);
             return $turnos;
