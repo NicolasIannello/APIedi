@@ -33,9 +33,10 @@
 
         function cargarCliente($request,$response,$arg){
             $datos= $request->getParsedBody();
-            $res=turno::clienteCargar($datos);
-            if($res==null){
-
+            $turnos=turno::clienteCargar($datos);
+            if($turnos=="Usuario no encontrado"  || $turnos=="No se encontro un turno disponible" || $turnos=="Ya existe un turno vinculado a esa cuenta en dicho horario"){
+                $response->getBody()->Write(json_encode($turnos));
+                return $response;
             }else{
                 $turnos=turno::ObtenerClientes();
                 $response->getBody()->Write(json_encode($turnos));
