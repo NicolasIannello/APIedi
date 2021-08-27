@@ -281,7 +281,12 @@
                 $consulta->execute(array(':serv'=>(int)$dat["servicio"],':dia'=>$dat["fecha"],':horario'=>$dat["time"]));
                 
                 $resultado2=$consulta->fetchAll(PDO::FETCH_COLUMN, 0);
-                $turnoID=(int)$resultado2[0];
+                if(count($resultado2)>0){
+                    $turnoID=(int)$resultado2[0];
+                }else{
+                    $turnoID=0;
+                }
+                
                                
                 $consulta = $objAccesoDatos->prepararConsulta("SELECT TU.TurnoID FROM Turno as TU, PaqueteTurno as PT WHERE TU.PaqueteID=PT.PaqueteID && PT.ServicioID=:serv && TU.Dia=:dia && TU.Horario=:horario && TU.Cupos>=1");
                 $consulta->execute(array(':serv'=>(int)$dat["servicio"],':dia'=>$dat["fecha"],':horario'=>$dat["time"]));
