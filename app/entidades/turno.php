@@ -286,9 +286,9 @@
                 $consulta = $objAccesoDatos->prepararConsulta("SELECT TU.TurnoID FROM Turno as TU, PaqueteTurno as PT WHERE TU.PaqueteID=PT.PaqueteID && PT.ServicioID=:serv && TU.Dia=:dia && TU.Horario=:horario && TU.Cupos>=1");
                 $consulta->execute(array(':serv'=>(int)$dat["servicio"],':dia'=>$dat["fecha"],':horario'=>$dat["time"]));
                 $fetcht=$consulta->fetchAll(PDO::FETCH_OBJ);
-                $res=count($fetcht);
+                $res2=count($fetcht);
                 
-                if($res==0){
+                if($res2==0){
                     return "No se encontro un turno disponible";
                 }else{
                     $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM TurnoClienteEmpresa WHERE ClienteID=:clie && TurnoID=:turn");
