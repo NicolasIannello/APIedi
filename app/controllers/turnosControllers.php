@@ -37,7 +37,8 @@
             if($res==null){
 
             }else{
-                $response->getBody()->Write(json_encode($res));
+                $turnos=turno::ObtenerClientes();
+                $response->getBody()->Write(json_encode($turnos));
                 return $response;
             }
         }
