@@ -22,6 +22,11 @@
                     $fetcht=$consulta->fetchAll(PDO::FETCH_OBJ);
                     $cant=count($fetcht);
                     if ($cant == 1) { 
+                        //--------------------------------
+                        $consulta=$objAccesoDatos->prepararConsulta('SELECT US.Email, US.NombreUsuario, CL.Nombre, CL.Apellido, TU.Dia, TU.Horario FROM Usuarios as US, Clientes as CL, Turno as TU JOIN TurnoClienteEmpresa as TCE ON TU.TurnoID=TCE.TurnoID WHERE TU.PaqueteID=:dato && US.Tipo="cliente"');
+                        $consulta->execute(array(':dato'=>$dat["dato"]));
+                        $afectados=$consulta->fetchAll(PDO::FETCH_OBJ);
+                        //---------------------------------
                         $consulta=$objAccesoDatos->prepararConsulta("DELETE PT,TU,TCE FROM PaqueteTurno as PT JOIN Turno as TU ON PT.PaqueteID=TU.PaqueteID JOIN TurnoClienteEmpresa as TCE on TU.TurnoID=TCE.TurnoID WHERE PT.PaqueteID=:dato");
                         $consulta->execute(array(':dato'=>(int)$dat["dato"]));
                         $consulta=$objAccesoDatos->prepararConsulta("DELETE PT,TU FROM PaqueteTurno as PT JOIN Turno as TU ON PT.PaqueteID=TU.PaqueteID WHERE PT.PaqueteID=:dato");
@@ -47,6 +52,11 @@
                     $fetcht=$consulta->fetchAll(PDO::FETCH_OBJ);
                     $cant=count($fetcht);
                     if ($cant == 1) { 
+                        //--------------------------------
+                        $consulta=$objAccesoDatos->prepararConsulta('SELECT US.Email, US.NombreUsuario, CL.Nombre, CL.Apellido, TU.Dia, TU.Horario FROM Usuarios as US, Clientes as CL, Turno as TU JOIN TurnoClienteEmpresa as TCE ON TU.TurnoID=TCE.TurnoID WHERE TU.TurnoID=:dato && US.Tipo="cliente"');
+                        $consulta->execute(array(':dato'=>(int)$dat["dato"]));
+                        $afectados=$consulta->fetchAll(PDO::FETCH_OBJ);
+                        //---------------------------------
                         $consulta=$objAccesoDatos->prepararConsulta("DELETE PT,TU,TCE FROM PaqueteTurno as PT JOIN Turno as TU ON PT.PaqueteID=TU.PaqueteID JOIN TurnoClienteEmpresa as TCE ON TU.TurnoID=TCE.TurnoID WHERE TU.TurnoID=:dato");
                         $consulta->execute(array(':dato'=>(int)$dat["dato"]));
                         $consulta=$objAccesoDatos->prepararConsulta("DELETE PT,TU FROM PaqueteTurno as PT JOIN Turno as TU ON PT.PaqueteID=TU.PaqueteID WHERE TU.TurnoID=:dato");
@@ -54,6 +64,11 @@
                     }else if($cant==0){
                         return "no encontrado";
                     }else{
+                        //--------------------------------
+                        $consulta=$objAccesoDatos->prepararConsulta('SELECT US.Email, US.NombreUsuario, CL.Nombre, CL.Apellido, TU.Dia, TU.Horario FROM Usuarios as US, Clientes as CL, Turno as TU JOIN TurnoClienteEmpresa as TCE ON TU.TurnoID=TCE.TurnoID WHERE TU.TurnoID=:dato && US.Tipo="cliente"');
+                        $consulta->execute(array(':dato'=>(int)$dat["dato"]));
+                        $afectados=$consulta->fetchAll(PDO::FETCH_OBJ);
+                        //---------------------------------
                         $consulta=$objAccesoDatos->prepararConsulta("DELETE TU,TCE FROM Turno as TU JOIN TurnoClienteEmpresa as TCE ON TU.TurnoID=TCE.TurnoID WHERE TU.TurnoID=:dato");
                         $consulta->execute(array(':dato'=>(int)$dat["dato"]));
                         $consulta=$objAccesoDatos->prepararConsulta("DELETE TU FROM Turno as TU WHERE TU.TurnoID=:dato");
@@ -77,6 +92,11 @@
                     $fetcht=$consulta->fetchAll(PDO::FETCH_OBJ);
                     $cant=count($fetcht);
                     if ($cant == 1) { 
+                        //--------------------------------
+                        $consulta=$objAccesoDatos->prepararConsulta('SELECT US.Email, US.NombreUsuario, CL.Nombre, CL.Apellido, TU.Dia, TU.Horario FROM Usuarios as US, Clientes as CL, Turno as TU JOIN TurnoClienteEmpresa as TCE ON TU.TurnoID=TCE.TurnoID WHERE TU.Dia=:dato && US.Tipo="cliente"');
+                        $consulta->execute(array(':dato'=>$dat["dato"]));
+                        $afectados=$consulta->fetchAll(PDO::FETCH_OBJ);
+                        //---------------------------------
                         $consulta=$objAccesoDatos->prepararConsulta("DELETE PT,TU,TCE FROM PaqueteTurno as PT JOIN Turno as TU ON PT.PaqueteID=TU.PaqueteID JOIN TurnoClienteEmpresa as TCE on TU.TurnoID=TCE.TurnoID WHERE TU.Dia=:dato");
                         $consulta->execute(array(':dato'=>$dat["dato"]));
                         $consulta=$objAccesoDatos->prepararConsulta("DELETE PT,TU FROM PaqueteTurno as PT JOIN Turno as TU ON PT.PaqueteID=TU.PaqueteID WHERE TU.Dia=:dato");
@@ -84,6 +104,11 @@
                     }else if($cant==0){
                         return "no encontrado";
                     }else{
+                        //--------------------------------
+                        $consulta=$objAccesoDatos->prepararConsulta('SELECT US.Email, US.NombreUsuario, CL.Nombre, CL.Apellido, TU.Dia, TU.Horario FROM Usuarios as US, Clientes as CL, Turno as TU JOIN TurnoClienteEmpresa as TCE ON TU.TurnoID=TCE.TurnoID WHERE TU.Dia=:dato && US.Tipo="cliente"');
+                        $consulta->execute(array(':dato'=>$dat["dato"]));
+                        $afectados=$consulta->fetchAll(PDO::FETCH_OBJ);
+                        //---------------------------------
                         $consulta=$objAccesoDatos->prepararConsulta("DELETE TU,TCE FROM Turno as TU JOIN TurnoClienteEmpresa as TCE on TU.TurnoID=TCE.TurnoID WHERE Dia=:dato");
                         $consulta->execute(array(':dato'=>$dat["dato"]));
                         $consulta=$objAccesoDatos->prepararConsulta("DELETE TU FROM Turno as TU WHERE Dia=:dato");
@@ -91,7 +116,8 @@
                     }
                     break;
             }
-            turno::ReportarEliminacion($dat['tipo'],$dat['dato'],$fetcht);
+            turno::ReportarEliminacion($afectados);
+            //var_dump($afectados);
         }
 
         public static function Crear($dat){
@@ -246,28 +272,35 @@
             }
         }
 
-        public static function ReportarEliminacion($tipo,$dato,$turnos){
-            $mail = new PHPMailer(true);
-            // http://www.google.com/accounts/DisplayUnlockCaptcha
-            //$mail->SMTPDebug  = SMTP::DEBUG_SERVER;                   
-            $mail->isSMTP();                                            
-            $mail->Host='smtp.gmail.com';                       
-            $mail->SMTPAuth=true;                                   
-            $mail->Username=getenv('mail');       
-            $mail->Password=getenv('mailpass');                       
-            $mail->SMTPSecure=PHPMailer::ENCRYPTION_SMTPS;            
-            $mail->Port=465;                                    
-            
-            $mail->setFrom('GestorDeTurnosOnline@gmail.com', 'Gestor de Turnos');
-            $mail->addAddress('42292048@ITBELTRAN.COM.AR');
-            $mail->addReplyTo('GestorDeTurnosOnline@gmail.com', 'Gestor de Turnos');
-            
-            $mail->isHTML(true);
-            $mail->Subject='Se han eliminado uno o varios turnos';
-            $mail->Body='Se han eliminado los turnos vinculados a el/la <b>'.$tipo.'</b> con los valores de <b>'.$dato;
-            $mail->AltBody='Se han eliminado los turnos vinculados a el/la '.$tipo.' con los valores de '.$dato;
+        public static function ReportarEliminacion($turnos){
+            $cant=count($turnos);
 
-            $mail->send();
+            for ($i=0; $i < $cant; $i++) { 
+                $mail = new PHPMailer(true);
+                //http://www.google.com/accounts/DisplayUnlockCaptcha
+                //$mail->SMTPDebug  = SMTP::DEBUG_SERVER;                   
+                $mail->isSMTP();                                            
+                $mail->Host='smtp.gmail.com';                       
+                $mail->SMTPAuth=true;                                   
+                //$mail->Username=getenv('mail'); 
+                $mail->Username='GestorDeTurnosOnline@gmail.com';       
+                //$mail->Password=getenv('mailpass');
+                $mail->Password='gestordeturnos';                       
+                $mail->SMTPSecure=PHPMailer::ENCRYPTION_SMTPS;            
+                $mail->Port=465;                                    
+                    
+                $mail->setFrom('GestorDeTurnosOnline@gmail.com', 'Gestor de Turnos');
+
+                $mail->addAddress($turnos[$i]->Email);
+                $mail->addReplyTo('GestorDeTurnosOnline@gmail.com', 'Gestor de Turnos');
+                    
+                $mail->isHTML(true);
+                $mail->Subject='Se ha eliminado un turno';
+                $mail->Body='Hola '.$turnos[$i]->Nombre.' <b>'.$turnos[$i]->NombreUsuario.'</b> '.$turnos[$i]->Apellido.', le informamos que su turno para el dia:<b> '.$turnos[$i]->Dia.'</b> en el horario de las <b> '.$turnos[$i]->Horario.'</b> ha sido cancelado.';
+                $mail->AltBody='Hola '.$turnos[$i]->Nombre.' '.$turnos[$i]->NombreUsuario.' '.$turnos[$i]->Apellido.', le informamos que su turno para el dia: '.$turnos[$i]->Dia.' en el horario de las  '.$turnos[$i]->Horario.' ha sido cancelado.';
+        
+                $mail->send();    
+            }
         }
 
         public static function clienteCargar($dat){
