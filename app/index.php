@@ -13,10 +13,12 @@
     require __DIR__ . '/controllers/usuarioControllers.php';
     require __DIR__ . '/controllers/turnosControllers.php';
     require __DIR__ . '/controllers/serviciosControllers.php';
+    require __DIR__ . '/controllers/localidadesControllers.php';
     require __DIR__ . '/DB/accesoDatos.php';
     require __DIR__ . '/entidades/usuario.php';
     require __DIR__ . '/entidades/turno.php';
     require __DIR__ . '/entidades/servicio.php';
+    require __DIR__ . '/entidades/localidades.php';
 
     $app = AppFactory::create();
 
@@ -45,7 +47,11 @@
         return $response;
     });
 
-    $app->post('/login[/]', \UsuarioController::class . ':obtenerTodos');
+    $app->group('/usuario', function (RouteCollectorProxy $group) {
+        $group->post('/login[/]', \UsuarioController::class . ':obtenerTodos' );
+        $group->post('/crear/empresa[/]', \UsuarioController::class . ':crearEmpresa' );
+        $group->post('/crear/cliente[/]', \UsuarioController::class . ':crearCliente' );
+    });
 
     $app->get('/servicios[/]', \ServicioController::class . ':ObtenerTodos');
 
@@ -56,6 +62,8 @@
         $group->post('/turnoCliente[/]', \TurnoController::class . ':cargarCliente' );
         $group->post('/clienteCargar[/]', \TurnoController::class . ':tablaCliente' );
     });
+
+    $app->get('/localidades[/]', \LocalidadesController::class . ':ObtenerTodos');
 
     $app->run();
 ?>
