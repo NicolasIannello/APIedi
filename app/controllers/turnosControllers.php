@@ -7,14 +7,15 @@
                 $response->getBody()->Write(json_encode("superpuesto"));
                 return $response;    
             }else{
-                $turnos=turno::ObtenerTodos();
+                $turnos=turno::ObtenerTodos($datos);
                 $response->getBody()->Write(json_encode($turnos));
                 return $response;
             }
         }
 
         function cargarTurnos($request,$response,$arg){
-            $turnos=turno::ObtenerTodos();
+            $datos= $request->getParsedBody();
+            $turnos=turno::ObtenerTodos($datos);
             $response->getBody()->Write(json_encode($turnos));
             return $response;
         }
@@ -25,7 +26,7 @@
                 $response->getBody()->Write(json_encode("no encontrado"));
                 return $response;    
             }else{
-                $turnos=turno::ObtenerTodos();
+                $turnos=turno::ObtenerTodos($datos);
                 $response->getBody()->Write(json_encode($turnos));
                 return $response;    
             }
@@ -38,14 +39,22 @@
                 $response->getBody()->Write(json_encode($turnos));
                 return $response;
             }else{
-                $turnos=turno::ObtenerClientes();
+                $turnos=turno::ObtenerClientes($datos);
                 $response->getBody()->Write(json_encode($turnos));
                 return $response;
             }
         }
 
         function tablaCliente($request,$response,$arg){
-            $turnos=turno::ObtenerClientes();
+            $datos= $request->getParsedBody();
+            $turnos=turno::ObtenerClientes($datos);
+            $response->getBody()->Write(json_encode($turnos));
+            return $response;
+        }
+
+        function traernom($request,$response,$arg){
+            $datos= $request->getParsedBody();
+            $turnos=turno::traernom($datos);
             $response->getBody()->Write(json_encode($turnos));
             return $response;
         }

@@ -8,7 +8,10 @@
             
             foreach($usuarios as $usuario){
                 if($datos["user"]==$usuario->NombreUsuario && $datos["contra"]==$usuario->Contraseña ){
-                    $band=$usuario->Tipo;
+                    //$band=$usuario->Tipo;
+                    $band = new stdClass();
+                    $band->Tipo =$usuario->Tipo;
+                    $band->ID =$usuario->ID;
                 }
             }
 

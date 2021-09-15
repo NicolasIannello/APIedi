@@ -14,11 +14,13 @@
     require __DIR__ . '/controllers/turnosControllers.php';
     require __DIR__ . '/controllers/serviciosControllers.php';
     require __DIR__ . '/controllers/localidadesControllers.php';
+    require __DIR__ . '/controllers/clienteControllers.php';
     require __DIR__ . '/DB/accesoDatos.php';
     require __DIR__ . '/entidades/usuario.php';
     require __DIR__ . '/entidades/turno.php';
     require __DIR__ . '/entidades/servicio.php';
     require __DIR__ . '/entidades/localidades.php';
+    require __DIR__ . '/entidades/cliente.php';
 
     $app = AppFactory::create();
 
@@ -57,10 +59,20 @@
 
     $app->group('/turno', function (RouteCollectorProxy $group) {
         $group->post('/crear[/]', \TurnoController::class . ':crearTurnos' );
-        $group->get('/cargar[/]', \TurnoController::class . ':cargarTurnos' );
+        $group->post('/cargar[/]', \TurnoController::class . ':cargarTurnos' );
         $group->post('/eliminar[/]', \TurnoController::class . ':eliminarTurno' );
         $group->post('/turnoCliente[/]', \TurnoController::class . ':cargarCliente' );
         $group->post('/clienteCargar[/]', \TurnoController::class . ':tablaCliente' );
+        $group->post('/traernom[/]', \TurnoController::class . ':traernom' );
+    });
+
+    $app->group('/cliente', function (RouteCollectorProxy $group) {
+        $group->post('/cargar[/]', \ClienteController::class . ':cargar' );
+        $group->post('/buscarservicios[/]', \ClienteController::class . ':buscarservicios' );
+        $group->post('/diaservicio[/]', \ClienteController::class . ':diaservicio' );
+        $group->post('/traernom[/]', \ClienteController::class . ':traernom' );
+        $group->post('/horarios[/]', \ClienteController::class . ':horarios' );
+        $group->post('/crear[/]', \ClienteController::class . ':crear' );
     });
 
     $app->get('/localidades[/]', \LocalidadesController::class . ':ObtenerTodos');

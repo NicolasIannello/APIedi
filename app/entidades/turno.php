@@ -5,10 +5,10 @@
 
     class turno{
 
-        public static function ObtenerTodos(){
+        public static function ObtenerTodos($dat){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT TU.PaqueteID as 'Codigo agrupador',TU.TurnoID as 'ID Turno particular',TU.Dia as 'Fecha',SE.Descripcion as 'Servicio',TU.Horario as 'Horario Turno',TU.Cupos as 'Cupos disponibles' FROM Turno as TU,PaqueteTurno as PT,Servicios as SE WHERE TU.PaqueteID=PT.PaqueteID && PT.ServicioID=SE.ServicioID && PT.EmpresaID=:emp");
-            $consulta->execute(array(':emp'=>1));
+            $consulta->execute(array(':emp'=>$dat["ID"]));
             $turnos=$consulta->fetchAll(PDO::FETCH_OBJ);
             return $turnos;
         }
@@ -76,8 +76,8 @@
                     }
                     break;
                 case 'Fecha':
-                    $consulta=$objAccesoDatos->prepararConsulta("SELECT PaqueteID FROM Turno WHERE Dia=:dato");
-                    $consulta->execute(array(':dato'=>$dat["dato"]));
+                    $consulta=$objAccesoDatos->prepararConsulta("SELECT TU.PaqueteID FROM Turno as TU join PaqueteTurno as PT on TU.PaqueteID=PT.PaqueteID WHERE TU.Dia=:dato && PT.EmpresaID=:id");
+                    $consulta->execute(array(':dato'=>$dat["dato"],':id'=>$dat["ID"]));
                     
                     $paquete=$consulta->fetchAll(PDO::FETCH_COLUMN, 0);
                     if(count($paquete)>0){
@@ -93,26 +93,26 @@
                     $cant=count($fetcht);
                     if ($cant == 1) { 
                         //--------------------------------
-                        $consulta=$objAccesoDatos->prepararConsulta('SELECT US.Email, US.NombreUsuario, CL.Nombre, CL.Apellido, TU.Dia, TU.Horario FROM Usuarios as US, Clientes as CL, Turno as TU JOIN TurnoClienteEmpresa as TCE ON TU.TurnoID=TCE.TurnoID WHERE TU.Dia=:dato && US.Tipo="cliente"');
-                        $consulta->execute(array(':dato'=>$dat["dato"]));
+                        $consulta=$objAccesoDatos->prepararConsulta('SELECT US.Email, US.NombreUsuario, CL.Nombre, CL.Apellido, TU.Dia, TU.Horario FROM Usuarios as US, Clientes as CL, Turno as TU JOIN TurnoClienteEmpresa as TCE ON TU.TurnoID=TCE.TurnoID WHERE TU.Dia=:dato && US.Tipo="cliente" && TU.PaqueteID=:id');
+                        $consulta->execute(array(':dato'=>$dat["dato"],':id'=>$PID));
                         $afectados=$consulta->fetchAll(PDO::FETCH_OBJ);
                         //---------------------------------
-                        $consulta=$objAccesoDatos->prepararConsulta("DELETE PT,TU,TCE FROM PaqueteTurno as PT JOIN Turno as TU ON PT.PaqueteID=TU.PaqueteID JOIN TurnoClienteEmpresa as TCE on TU.TurnoID=TCE.TurnoID WHERE TU.Dia=:dato");
-                        $consulta->execute(array(':dato'=>$dat["dato"]));
-                        $consulta=$objAccesoDatos->prepararConsulta("DELETE PT,TU FROM PaqueteTurno as PT JOIN Turno as TU ON PT.PaqueteID=TU.PaqueteID WHERE TU.Dia=:dato");
-                        $consulta->execute(array(':dato'=>$dat["dato"]));
+                        $consulta=$objAccesoDatos->prepararConsulta("DELETE PT,TU,TCE FROM PaqueteTurno as PT JOIN Turno as TU ON PT.PaqueteID=TU.PaqueteID JOIN TurnoClienteEmpresa as TCE on TU.TurnoID=TCE.TurnoID WHERE TU.Dia=:dato && PT.PaqueteID=:id");
+                        $consulta->execute(array(':dato'=>$dat["dato"],':id'=>$PID));
+                        $consulta=$objAccesoDatos->prepararConsulta("DELETE PT,TU FROM PaqueteTurno as PT JOIN Turno as TU ON PT.PaqueteID=TU.PaqueteID WHERE TU.Dia=:dato && PT.PaqueteID=:id");
+                        $consulta->execute(array(':dato'=>$dat["dato"],':id'=>$PID));
                     }else if($cant==0){
                         return "no encontrado";
                     }else{
                         //--------------------------------
-                        $consulta=$objAccesoDatos->prepararConsulta('SELECT US.Email, US.NombreUsuario, CL.Nombre, CL.Apellido, TU.Dia, TU.Horario FROM Usuarios as US, Clientes as CL, Turno as TU JOIN TurnoClienteEmpresa as TCE ON TU.TurnoID=TCE.TurnoID WHERE TU.Dia=:dato && US.Tipo="cliente"');
-                        $consulta->execute(array(':dato'=>$dat["dato"]));
+                        $consulta=$objAccesoDatos->prepararConsulta('SELECT US.Email, US.NombreUsuario, CL.Nombre, CL.Apellido, TU.Dia, TU.Horario FROM Usuarios as US, Clientes as CL, Turno as TU JOIN TurnoClienteEmpresa as TCE ON TU.TurnoID=TCE.TurnoID WHERE TU.Dia=:dato && US.Tipo="cliente" && TU.PaqueteID=:id');
+                        $consulta->execute(array(':dato'=>$dat["dato"],':id'=>$PID));
                         $afectados=$consulta->fetchAll(PDO::FETCH_OBJ);
                         //---------------------------------
-                        $consulta=$objAccesoDatos->prepararConsulta("DELETE TU,TCE FROM Turno as TU JOIN TurnoClienteEmpresa as TCE on TU.TurnoID=TCE.TurnoID WHERE Dia=:dato");
-                        $consulta->execute(array(':dato'=>$dat["dato"]));
-                        $consulta=$objAccesoDatos->prepararConsulta("DELETE TU FROM Turno as TU WHERE Dia=:dato");
-                        $consulta->execute(array(':dato'=>$dat["dato"]));
+                        $consulta=$objAccesoDatos->prepararConsulta("DELETE TU,TCE FROM Turno as TU JOIN TurnoClienteEmpresa as TCE on TU.TurnoID=TCE.TurnoID WHERE Dia=:dato && PT.PaqueteID=:id");
+                        $consulta->execute(array(':dato'=>$dat["dato"],':id'=>$PID));
+                        $consulta=$objAccesoDatos->prepararConsulta("DELETE TU FROM Turno as TU WHERE Dia=:dato && PT.PaqueteID=:id");
+                        $consulta->execute(array(':dato'=>$dat["dato"],':id'=>$PID));
                     }
                     break;
             }
@@ -121,7 +121,7 @@
         }
 
         public static function Crear($dat){
-            $emp=1;
+            $emp=$dat['ID'];
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
     
             $selectsql="SELECT * FROM PaqueteTurno WHERE EmpresaID=:Emp && ServicioID=:serv && ( ";
@@ -320,8 +320,8 @@
                 $clienteID=(int)$resultado[0];
                 
 
-                $consulta = $objAccesoDatos->prepararConsulta("SELECT TU.TurnoID FROM Turno as TU, PaqueteTurno as PT WHERE TU.PaqueteID=PT.PaqueteID && PT.ServicioID=:serv && TU.Dia=:dia && TU.Horario=:horario && TU.Cupos>=1");
-                $consulta->execute(array(':serv'=>(int)$dat["servicio"],':dia'=>$dat["fecha"],':horario'=>$dat["time"]));
+                $consulta = $objAccesoDatos->prepararConsulta("SELECT TU.TurnoID FROM Turno as TU, PaqueteTurno as PT WHERE TU.PaqueteID=PT.PaqueteID && PT.ServicioID=:serv && TU.Dia=:dia && TU.Horario=:horario && TU.Cupos>=1 && PT.EmpresaID=:id");
+                $consulta->execute(array(':serv'=>(int)$dat["servicio"],':dia'=>$dat["fecha"],':horario'=>$dat["time"],':id'=>$dat["ID"]));
                 
                 $resultado2=$consulta->fetchAll(PDO::FETCH_COLUMN, 0);
                 if(count($resultado2)>0){
@@ -331,8 +331,8 @@
                 }
                 
                                
-                $consulta = $objAccesoDatos->prepararConsulta("SELECT TU.TurnoID FROM Turno as TU, PaqueteTurno as PT WHERE TU.PaqueteID=PT.PaqueteID && PT.ServicioID=:serv && TU.Dia=:dia && TU.Horario=:horario && TU.Cupos>=1");
-                $consulta->execute(array(':serv'=>(int)$dat["servicio"],':dia'=>$dat["fecha"],':horario'=>$dat["time"]));
+                $consulta = $objAccesoDatos->prepararConsulta("SELECT TU.TurnoID FROM Turno as TU, PaqueteTurno as PT WHERE TU.PaqueteID=PT.PaqueteID && PT.ServicioID=:serv && TU.Dia=:dia && TU.Horario=:horario && TU.Cupos>=1 && PT.EmpresaID=:id");
+                $consulta->execute(array(':serv'=>(int)$dat["servicio"],':dia'=>$dat["fecha"],':horario'=>$dat["time"],':id'=>$dat["ID"]));
                 $fetcht=$consulta->fetchAll(PDO::FETCH_OBJ);
                 $res2=count($fetcht);
                 
@@ -346,8 +346,8 @@
                     if($res>0){
                         return "Ya existe un turno vinculado a esa cuenta en dicho horario";
                     }else{
-                        $consulta = $objAccesoDatos->prepararConsulta("UPDATE `Turno` as TU, PaqueteTurno as PT SET TU.Cupos=TU.Cupos-1 WHERE TU.PaqueteID=PT.PaqueteID && PT.ServicioID=:serv && TU.Dia=:dia && TU.Horario=:horario && TU.Cupos>=1");
-                        $consulta->execute(array(':serv'=>(int)$dat["servicio"],':dia'=>$dat["fecha"],':horario'=>$dat["time"]));
+                        $consulta = $objAccesoDatos->prepararConsulta("UPDATE `Turno` as TU, PaqueteTurno as PT SET TU.Cupos=TU.Cupos-1 WHERE TU.PaqueteID=PT.PaqueteID && PT.ServicioID=:serv && TU.Dia=:dia && TU.Horario=:horario && TU.Cupos>=1 && PT.EmpresaID=:id");
+                        $consulta->execute(array(':serv'=>(int)$dat["servicio"],':dia'=>$dat["fecha"],':horario'=>$dat["time"],':id'=>$dat["ID"]));
 
                         $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO TurnoClienteEmpresa (ClienteID,TurnoID) VALUES (:clienteID,:turnoID)");
                         $consulta->execute(array(':clienteID'=>$clienteID,':turnoID'=>$turnoID));
@@ -356,10 +356,24 @@
             }
         }
 
-        public static function ObtenerClientes(){
+        public static function ObtenerClientes($dat){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT DISTINCT  TU.Dia as 'Fecha', SE.Descripcion as 'Servicio', TU.Horario as 'Horario turno', US.NombreUsuario as 'Cliente' FROM Turno as TU,PaqueteTurno as PT,Usuarios as US, Clientes as CL, Servicios as SE,TurnoClienteEmpresa as TCE WHERE TU.TurnoID=TCE.TurnoID && US.Tipo='cliente' && SE.ServicioID=PT.ServicioID && PT.EmpresaID=:emp");
-            $consulta->execute(array(':emp'=>1));
+            $consulta = $objAccesoDatos->prepararConsulta("
+            SELECT DISTINCT  TU.Dia as 'Fecha', SE.Descripcion as 'Servicio', TU.Horario as 'Horario turno',
+            US.NombreUsuario as 'Cliente' FROM usuarios AS US, empresa AS EM JOIN 
+            paqueteturno AS PT ON EM.EmpresaID=PT.EmpresaID join 
+            turno AS TU ON TU.PaqueteID=PT.PaqueteID,servicios AS SE,turnoclienteempresa AS TCE
+             WHERE TU.TurnoID=TCE.TurnoID && US.Tipo='cliente' && SE.ServicioID=PT.ServicioID && PT.EmpresaID=:emp");
+            $consulta->execute(array(':emp'=>$dat['ID']));
+            $turnos=$consulta->fetchAll(PDO::FETCH_OBJ);
+            return $turnos;
+        }
+        
+        public static function traernom($dat){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("
+            SELECT US.NombreUsuario FROM usuarios AS US JOIN empresa AS EM ON US.UsuarioID=EM.UsuarioID WHERE EM.EmpresaID=:id");
+            $consulta->execute(array(':id'=>$dat['ID']));
             $turnos=$consulta->fetchAll(PDO::FETCH_OBJ);
             return $turnos;
         }
