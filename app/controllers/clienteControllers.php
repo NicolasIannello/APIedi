@@ -45,6 +45,13 @@
             $response->getBody()->Write(json_encode($res));
             return $response;
         }
+
+        function eliminar($request,$response,$arg){
+            $datos= $request->getParsedBody();
+            $res= cliente::eliminar($datos);
+            $response->getBody()->Write(json_encode($res));
+            return $response;
+        }
     }
     
 ?>

@@ -73,6 +73,7 @@
         $group->post('/traernom[/]', \ClienteController::class . ':traernom' );
         $group->post('/horarios[/]', \ClienteController::class . ':horarios' );
         $group->post('/crear[/]', \ClienteController::class . ':crear' );
+        $group->post('/eliminar[/]', \ClienteController::class . ':eliminar' );
     });
 
     $app->get('/localidades[/]', \LocalidadesController::class . ':ObtenerTodos');
