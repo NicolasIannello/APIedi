@@ -50,10 +50,11 @@
 
         public static function horarios($datos){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT distinct PT.HorarioInicio, PT.HorarioFin,PT.DuracionMinima,PT.DuracionMaxima 
-            FROM paqueteturno AS PT JOIN turno AS TU ON PT.PaqueteID=TU.PaqueteID,
-            usuarios AS US JOIN empresa AS EM ON US.UsuarioID=EM.UsuarioID 
-            WHERE TU.Dia=:fecha && US.NombreUsuario=:nom");
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT distinct TU.Horario, PT.DuracionMinima 
+            FROM paqueteturno AS PT,turno AS TU ,
+            usuarios AS US ,empresa AS EM 
+            WHERE TU.Dia=:fecha && US.NombreUsuario=:nom && US.UsuarioID=EM.UsuarioID &&
+            EM.EmpresaID=PT.EmpresaID && TU.cupos>=1 && PT.PaqueteID=TU.PaqueteID");
             $consulta->execute(array(':fecha'=>$datos['fecha'],':nom'=>$datos['nom']));
             $horarios=$consulta->fetchAll(PDO::FETCH_OBJ);
             return $horarios;
@@ -221,9 +222,9 @@
             $mail->addReplyTo('GestorDeTurnosOnline@gmail.com', 'Gestor de Turnos');
                     
             $mail->isHTML(true);
-            $mail->Subject='Se ha eliminado un turno';
-            $mail->Body='Hola '.$clie[0]->Nombre.' <b>'.$clie[0]->NombreUsuario.'</b> '.$clie[0]->Apellido.', le informamos que su turno para el dia:<b> '.$emp[0]->Dia.'</b> en el horario de las <b> '.$emp[0]->Horario.'</b> en:<b> '.$emp[0]->Ubicacion.'</b> ha sido solicitado con exito.';
-            $mail->AltBody='Hola '.$clie[0]->Nombre.' '.$clie[0]->NombreUsuario.' '.$clie[0]->Apellido.', le informamos que su turno para el dia: '.$emp[0]->Dia.' en el horario de las  '.$emp[0]->Horario.' en: '.$emp[0]->Ubicacion.' ha sido solicitado con exito.';
+            $mail->Subject='Se ha solicitado un turno';
+            $mail->Body='Hola '+$clie[0]->Nombre+' <b>'+$clie[0]->NombreUsuario+'</b> '+$clie[0]->Apellido+', le informamos que su turno para el dia:<b> '+$emp[0]->Dia+'</b> en el horario de las <b> '+$emp[0]->Horario+'</b> en:<b> '+$emp[0]->Ubicacion+'</b> para el comercio: <b>'+$emp[0]->NombreUsuario+'</b> ha sido solicitado con exito+';
+            $mail->AltBody='Hola '+$clie[0]->Nombre+' '+$clie[0]->NombreUsuario+' '+$clie[0]->Apellido+', le informamos que su turno para el dia: '+$emp[0]->Dia+' en el horario de las  '+$emp[0]->Horario+' en: '+$emp[0]->Ubicacion+' para el comercio:'+$emp[0]->NombreUsuario+'ha sido solicitado con exito.';
         
             $mail->send();    
             //--------------------------------------------------------------------------------------------//--------------------------------------------------------------------------------------------
@@ -246,7 +247,7 @@
             $mail->addReplyTo('GestorDeTurnosOnline@gmail.com', 'Gestor de Turnos');
                     
             $mail->isHTML(true);
-            $mail->Subject='Se ha eliminado un turno';
+            $mail->Subject='Se ha solicitado un turno';
             $mail->Body='Hola <b>'.$emp[0]->NombreUsuario.'</b> le informamos que el usuario: '.$clie[0]->Nombre.' <b>'.$clie[0]->NombreUsuario.'</b> '.$clie[0]->Apellido.', ha solicitado un turno para el dia:<b> '.$emp[0]->Dia.'</b> en el horario de las <b> '.$emp[0]->Horario.'</b> para el servicio: <b>'.$emp[0]->Descripcion.'</b>.';
             $mail->AltBody='Hola '.$emp[0]->NombreUsuario.'le informamos que el usuario: '.$clie[0]->Nombre.' '.$clie[0]->NombreUsuario.' '.$clie[0]->Apellido.', ha solicitado un turno para el dia: '.$emp[0]->Dia.' en el horario de las '.$emp[0]->Horario.' para el servicio: '.$emp[0]->Descripcion.'.';
         
