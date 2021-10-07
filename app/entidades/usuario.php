@@ -30,7 +30,7 @@
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT US.NombreUsuario, US.`Contraseña`, US.Tipo, 
             case when US.Tipo='cliente' then CL.ClienteID ELSE EM.EmpresaID END AS ID
-            FROM usuarios AS US left JOIN empresa AS EM ON US.UsuarioID=EM.UsuarioID left JOIN 
+            FROM Usuarios AS US left JOIN Empresa AS EM ON US.UsuarioID=EM.UsuarioID left JOIN 
             clientes AS CL ON US.UsuarioID=CL.UsuarioID");
             $consulta->execute();
             $usuarios=$consulta->fetchAll(PDO::FETCH_OBJ);
