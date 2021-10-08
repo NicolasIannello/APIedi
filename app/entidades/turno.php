@@ -362,9 +362,9 @@
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("
             SELECT DISTINCT  TU.Dia as 'Fecha', SE.Descripcion as 'Servicio', TU.Horario as 'Horario turno',
-            US.NombreUsuario as 'Cliente' FROM usuarios AS US, empresa AS EM JOIN 
-            paqueteturno AS PT ON EM.EmpresaID=PT.EmpresaID join 
-            turno AS TU ON TU.PaqueteID=PT.PaqueteID,servicios AS SE,turnoclienteempresa AS TCE
+            US.NombreUsuario as 'Cliente' FROM Usuarios AS US, Empresa AS EM JOIN 
+            PaqueteTurno AS PT ON EM.EmpresaID=PT.EmpresaID join 
+            Turno AS TU ON TU.PaqueteID=PT.PaqueteID,servicios AS SE,TurnoClienteEmpresa AS TCE
              WHERE TU.TurnoID=TCE.TurnoID && US.Tipo='cliente' && SE.ServicioID=PT.ServicioID && PT.EmpresaID=:emp");
             $consulta->execute(array(':emp'=>$dat['ID']));
             $turnos=$consulta->fetchAll(PDO::FETCH_OBJ);
@@ -374,7 +374,7 @@
         public static function traernom($dat){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("
-            SELECT US.NombreUsuario FROM usuarios AS US JOIN empresa AS EM ON US.UsuarioID=EM.UsuarioID WHERE EM.EmpresaID=:id");
+            SELECT US.NombreUsuario FROM Usuarios AS US JOIN Empresa AS EM ON US.UsuarioID=EM.UsuarioID WHERE EM.EmpresaID=:id");
             $consulta->execute(array(':id'=>$dat['ID']));
             $turnos=$consulta->fetchAll(PDO::FETCH_OBJ);
             return $turnos;
