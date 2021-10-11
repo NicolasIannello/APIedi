@@ -364,7 +364,7 @@
             SELECT DISTINCT  TU.Dia as 'Fecha', SE.Descripcion as 'Servicio', TU.Horario as 'Horario turno',
             US.NombreUsuario as 'Cliente' FROM Usuarios AS US, Empresa AS EM JOIN 
             PaqueteTurno AS PT ON EM.EmpresaID=PT.EmpresaID join 
-            Turno AS TU ON TU.PaqueteID=PT.PaqueteID,Servicios AS SE,TurnoClienteEmpresa AS TCE
+            Turno AS TU ON TU.PaqueteID=PT.PaqueteID,Servicios AS SE,TurnoClienteEmpresa AS TCE, Clientes as CL
              WHERE TU.TurnoID=TCE.TurnoID && US.Tipo='cliente' && SE.ServicioID=PT.ServicioID && PT.EmpresaID=:emp
              && TCE.ClienteID=CL.ClienteID && CL.UsuarioID=US.UsuarioID");
             $consulta->execute(array(':emp'=>$dat['ID']));
