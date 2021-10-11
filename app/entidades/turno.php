@@ -365,7 +365,8 @@
             US.NombreUsuario as 'Cliente' FROM Usuarios AS US, Empresa AS EM JOIN 
             PaqueteTurno AS PT ON EM.EmpresaID=PT.EmpresaID join 
             Turno AS TU ON TU.PaqueteID=PT.PaqueteID,Servicios AS SE,TurnoClienteEmpresa AS TCE
-             WHERE TU.TurnoID=TCE.TurnoID && US.Tipo='cliente' && SE.ServicioID=PT.ServicioID && PT.EmpresaID=:emp");
+             WHERE TU.TurnoID=TCE.TurnoID && US.Tipo='cliente' && SE.ServicioID=PT.ServicioID && PT.EmpresaID=:emp
+             && TCE.ClienteID=CL.ClienteID && CL.UsuarioID=US.UsuarioID");
             $consulta->execute(array(':emp'=>$dat['ID']));
             $turnos=$consulta->fetchAll(PDO::FETCH_OBJ);
             return $turnos;
