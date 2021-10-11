@@ -316,7 +316,7 @@
             if($res==0){
                 return "Usuario no encontrado";
             }else{
-                $consulta=$objAccesoDatos->prepararConsulta("SELECT CL.ClienteID FROM Usuarios as US, Clientes as CL WHERE US.NombreUsuario=:user && US.Tipo='cliente'");
+                $consulta=$objAccesoDatos->prepararConsulta("SELECT CL.ClienteID FROM Usuarios as US, Clientes as CL WHERE US.NombreUsuario=:user && US.Tipo='cliente' && US.UsuarioID=CL.UsuarioID");
                 $consulta->execute(array(':user'=>$dat["cliente"]));
                 $resultado=$consulta->fetchAll(PDO::FETCH_COLUMN, 0);
                 $clienteID=(int)$resultado[0];
