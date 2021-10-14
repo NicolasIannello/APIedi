@@ -223,7 +223,7 @@
                     
             $mail->isHTML(true);
             $mail->Subject='Se ha solicitado un turno';
-            $mail->Body='Hola '+$clie[0]->Nombre+' <b>'+$clie[0]->NombreUsuario+'</b> '+$clie[0]->Apellido+', le informamos que su turno para el dia:<b> '+$emp[0]->Dia+'</b> en el horario de las <b> '+$emp[0]->Horario+'</b> en:<b> '+$emp[0]->Ubicacion+'</b> para el comercio: <b>'+$emp[0]->NombreUsuario+'</b> ha sido solicitado con exito+';
+            $mail->Body='Hola '+$clie[0]->Nombre+' <b>'+$clie[0]->NombreUsuario+'</b> '+$clie[0]->Apellido+', le informamos que su turno para el dia:<b> '+$emp[0]->Dia+'</b> en el horario de las <b> '+$emp[0]->Horario+'</b> en:<b> '+$emp[0]->Ubicacion+'</b> para el comercio: <b>'+$emp[0]->NombreUsuario+'</b> ha sido solicitado con exito.';
             $mail->AltBody='Hola '+$clie[0]->Nombre+' '+$clie[0]->NombreUsuario+' '+$clie[0]->Apellido+', le informamos que su turno para el dia: '+$emp[0]->Dia+' en el horario de las  '+$emp[0]->Horario+' en: '+$emp[0]->Ubicacion+' para el comercio:'+$emp[0]->NombreUsuario+'ha sido solicitado con exito.';
         
             $mail->send();    
