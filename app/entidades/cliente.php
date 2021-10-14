@@ -72,7 +72,7 @@
             $res=count($fetcht);
 
             if($res==0){
-                return "Turno no encontrado";
+                return "Se han agotado los cupos para ese horario";
             }else{
                 $objAccesoDatos = AccesoDatos::obtenerInstancia();
                 $consulta = $objAccesoDatos->prepararConsulta("SELECT DISTINCT  TU.TurnoID FROM PaqueteTurno AS PT 
