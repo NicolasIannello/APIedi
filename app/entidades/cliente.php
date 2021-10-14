@@ -96,7 +96,7 @@
                     $consulta->execute(array(':clienteID'=>$datos['ID'],':turnoID'=>$TurnoID));
 
                     $consulta = $objAccesoDatos->prepararConsulta("SELECT TU.Dia,TU.Horario,US.NombreUsuario,US.Email,EM.Ubicacion,SE.Descripcion 
-                    FROM Turno AS TU, Usuarios AS US, Paqueteturno AS PT, Empresa AS EM,Servicios as SE WHERE TU.TurnoID=:id && TU.PaqueteID=PT.PaqueteID &&
+                    FROM Turno AS TU, Usuarios AS US, PaqueteTurno AS PT, Empresa AS EM,Servicios as SE WHERE TU.TurnoID=:id && TU.PaqueteID=PT.PaqueteID &&
                     PT.EmpresaID=EM.EmpresaID && EM.UsuarioID=US.UsuarioID && PT.ServicioID=SE.ServicioID");
                     $consulta->execute(array(':id'=>$TurnoID));
                     $Demp=$consulta->fetchAll(PDO::FETCH_OBJ);
