@@ -169,8 +169,8 @@
                     
             $mail->isHTML(true);
             $mail->Subject='Se ha eliminado un turno';
-            $mail->Body='Hola '.$clie[0]->Nombre.' <b>'.$clie[0]->NombreUsuario.'</b> '.$clie[0]->Apellido.', le informamos que su turno para el dia:<b> '.$emp[0]->Dia.'</b> en el horario de las <b> '.$emp[0]->Horario.'</b> ha sido cancelado de manera exitosa.';
-            $mail->AltBody='Hola '.$clie[0]->Nombre.' '.$clie[0]->NombreUsuario.' '.$clie[0]->Apellido.', le informamos que su turno para el dia: '.$emp[0]->Dia.' en el horario de las  '.$emp[0]->Horario.' ha sido cancelado de manera exitosa.';
+            $mail->Body='Hola '.$clie[0]->Nombre.' <b>'.$clie[0]->NombreUsuario.'</b> '.$clie[0]->Apellido.', le informamos que su turno para el dia:<b> '.$emp[0]->Dia.'</b> en el horario de las <b> '.$emp[0]->Horario.'</b>en la ubicacion de<b>: '.$emp[0]->Ubicacion.'</b>para el comercio:<b>:'.$emp[0]->NombreUsuario.'</b> ha sido cancelado de manera exitosa.';
+            $mail->AltBody='Hola '.$clie[0]->Nombre.' '.$clie[0]->NombreUsuario.' '.$clie[0]->Apellido.', le informamos que su turno para el dia: '.$emp[0]->Dia.' en el horario de las  '.$emp[0]->Horario.' en la ubicacion de: '.$emp[0]->Ubicacion.'para el comercio:'.$emp[0]->NombreUsuario.' ha sido cancelado de manera exitosa.';
         
             $mail->send();    
             //--------------------------------------------------------------------------------------------//--------------------------------------------------------------------------------------------
@@ -194,8 +194,8 @@
                     
             $mail->isHTML(true);
             $mail->Subject='Se ha eliminado un turno';
-            $mail->Body='Hola <b>'.$emp[0]->NombreUsuario.'</b> le informamos que el usuario: '.$clie[0]->Nombre.' <b>'.$clie[0]->NombreUsuario.'</b> '.$clie[0]->Apellido.', ha eliminado su turno para el dia:<b> '.$emp[0]->Dia.'</b> en el horario de las <b> '.$emp[0]->Horario.'</b>.';
-            $mail->AltBody='Hola '.$emp[0]->NombreUsuario.'le informamos que el usuario: '.$clie[0]->Nombre.' '.$clie[0]->NombreUsuario.' '.$clie[0]->Apellido.', ha eliminado su turno para el dia: '.$emp[0]->Dia.' en el horario de las '.$emp[0]->Horario.'.';
+            $mail->Body='Hola <b>'.$emp[0]->NombreUsuario.'</b> le informamos que el usuario: '.$clie[0]->Nombre.' <b>'.$clie[0]->NombreUsuario.'</b> '.$clie[0]->Apellido.', ha eliminado su turno para el dia:<b> '.$emp[0]->Dia.'</b> en el horario de las <b> '.$emp[0]->Horario.'</b> para el servicio:<b> '.$emp[0]->Descripcion.'</b>.';
+            $mail->AltBody='Hola '.$emp[0]->NombreUsuario.'le informamos que el usuario: '.$clie[0]->Nombre.' '.$clie[0]->NombreUsuario.' '.$clie[0]->Apellido.', ha eliminado su turno para el dia: '.$emp[0]->Dia.' en el horario de las '.$emp[0]->Horario.'para el servicio: '.$emp[0]->Descripcion.'.';
         
             $mail->send(); 
         }
