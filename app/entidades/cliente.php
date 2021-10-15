@@ -54,7 +54,7 @@
             FROM PaqueteTurno AS PT,Turno AS TU ,
             Usuarios AS US ,Empresa AS EM 
             WHERE TU.Dia=:fecha && US.NombreUsuario=:nom && US.UsuarioID=EM.UsuarioID &&
-            EM.EmpresaID=PT.EmpresaID && TU.cupos>=1 && PT.PaqueteID=TU.PaqueteID");
+            EM.EmpresaID=PT.EmpresaID && TU.cupos>=1 && PT.PaqueteID=TU.PaqueteID ORDER by TU.Horario");
             $consulta->execute(array(':fecha'=>$datos['fecha'],':nom'=>$datos['nom']));
             $horarios=$consulta->fetchAll(PDO::FETCH_OBJ);
             return $horarios;
