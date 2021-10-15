@@ -40,9 +40,9 @@
 
         public static function diaservicio($datos){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT TU.Dia FROM Turno AS TU JOIN PaqueteTurno AS PT ON TU.PaqueteID=PT.PaqueteID 
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT distinct TU.Dia FROM Turno AS TU JOIN PaqueteTurno AS PT ON TU.PaqueteID=PT.PaqueteID 
             JOIN Empresa AS EM ON PT.EmpresaID=EM.EmpresaID JOIN Usuarios AS US ON US.UsuarioID=EM.UsuarioID 
-            WHERE PT.ServicioID=:serv && US.NombreUsuario=:nom GROUP BY TU.Dia");
+            WHERE PT.ServicioID=:serv && US.NombreUsuario=:nom && TU.Cupos>0");
             $consulta->execute(array(':serv'=>$datos['serv'],':nom'=>$datos['nom']));
             $turnos=$consulta->fetchAll(PDO::FETCH_OBJ);
             return $turnos;
