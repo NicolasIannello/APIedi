@@ -29,7 +29,7 @@
     
         public static function buscarservicios($datos){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT PT.PaqueteID,EM.Ubicacion,US.NombreUsuario FROM Usuarios AS US,
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT distinct EM.Ubicacion,US.NombreUsuario FROM Usuarios AS US,
             Localidades AS LC JOIN Empresa AS EM ON LC.LocalidadID=EM.LocalidadID 
             LEFT JOIN PaqueteTurno AS PT ON PT.EmpresaID=EM.EmpresaID
             WHERE EM.LocalidadID=:loc && LC.LocalidadID=:loc2 && EM.UsuarioID=US.UsuarioID && PT.ServicioID=:serv GROUP BY PT.PaqueteID");
