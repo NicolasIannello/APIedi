@@ -266,7 +266,7 @@
                                     ) 
                             ); 
             
-            print($message->sid);
+            //print($message->sid);
         }
     }
 ?>
