@@ -255,14 +255,14 @@
             $mail->send(); 
             //--------------------------------------------------------------------------------------------------
             $sid    = "ACea71c554ccddc543dc37e16e9e5b098a"; 
-            $token  = "8ac54de0acf73a7aa96373d57bdee7d5"; 
+            $token  = "58a692f90d442fd5f62a5440e6de0fc0"; 
             $twilio = new Client($sid, $token); 
-            
+            $mensaje='Hola '.$clie[0]->Nombre.' '.$clie[0]->NombreUsuario.' '.$clie[0]->Apellido.', le informamos que su turno para el dia: '.$emp[0]->Dia.' en el horario de las  '.$emp[0]->Horario.' en: '.$emp[0]->Ubicacion.' para el comercio:'.$emp[0]->NombreUsuario.'ha sido solicitado con exito.';
             $message = $twilio->messages 
                             ->create("whatsapp:+5491161961478", // to 
                                     array( 
                                         "from" => "whatsapp:+14155238886",       
-                                        "body" => 'Hola '.$clie[0]->Nombre.' '.$clie[0]->NombreUsuario.' '.$clie[0]->Apellido.', le informamos que su turno para el dia: '.$emp[0]->Dia.' en el horario de las  '.$emp[0]->Horario.' en: '.$emp[0]->Ubicacion.' para el comercio:'.$emp[0]->NombreUsuario.'ha sido solicitado con exito.' 
+                                        "body" => $mensaje 
                                     ) 
                             ); 
             
