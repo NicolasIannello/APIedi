@@ -255,7 +255,7 @@
             $mail->send(); 
             //--------------------------------------------------------------------------------------------------
             $sid    = "ACea71c554ccddc543dc37e16e9e5b098a"; 
-            $token  = "58a692f90d442fd5f62a5440e6de0fc0"; 
+            $token  = "9bf83f01"."ca370702f6d"."9bab317ba9b55"; 
             $twilio = new Client($sid, $token); 
             $mensaje='Hola '.$clie[0]->Nombre.' '.$clie[0]->NombreUsuario.' '.$clie[0]->Apellido.', le informamos que su turno para el dia: '.$emp[0]->Dia.' en el horario de las  '.$emp[0]->Horario.' en: '.$emp[0]->Ubicacion.' para el comercio:'.$emp[0]->NombreUsuario.'ha sido solicitado con exito.';
             $message = $twilio->messages 
