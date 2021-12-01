@@ -287,7 +287,7 @@
                 //$mail->Username=getenv('mail'); 
                 $mail->Username='GestorDeTurnosOnline@gmail.com';       
                 //$mail->Password=getenv('mailpass');
-                $mail->Password='gestordeturnos';                       
+                $mail->Password='gestordeturnoss';                       
                 $mail->SMTPSecure=PHPMailer::ENCRYPTION_SMTPS;            
                 $mail->Port=465;                                    
                     
