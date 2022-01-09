@@ -111,7 +111,7 @@
                     WHERE TU.TurnoID=:id");
                     $consulta->execute(array(':id'=>$TurnoID));
 
-                    cliente::informarturno($Dclie,$Demp);
+                    cliente::informarturno($Dclie,$Demp,$datos['cel'],$datos['msgenv']);
                     return "Turno creado";
                 }else{
                     return "Ya tienes un turno en ese horario";
@@ -202,8 +202,7 @@
         }
 
         
-        public static function informarturno($clie,$emp){
-
+        public static function informarturno($clie,$emp,$cel,$env){
             $mail = new PHPMailer(true);
             //http://www.google.com/accounts/DisplayUnlockCaptcha
             //$mail->SMTPDebug  = SMTP::DEBUG_SERVER;                   
@@ -254,18 +253,19 @@
         
             $mail->send(); 
             //--------------------------------------------------------------------------------------------------
+            if($env=='true'){
             $sid    = "ACea71c554ccddc543dc37e16e9e5b098a"; 
             $token  = "9bf83f01"."ca370702f6d"."9bab317ba9b55"; 
             $twilio = new Client($sid, $token); 
             $mensaje='Hola '.$clie[0]->Nombre.' '.$clie[0]->NombreUsuario.' '.$clie[0]->Apellido.', le informamos que su turno para el dia: '.$emp[0]->Dia.' en el horario de las  '.$emp[0]->Horario.' en: '.$emp[0]->Ubicacion.' para el comercio:'.$emp[0]->NombreUsuario.'ha sido solicitado con exito.';
             $message = $twilio->messages 
-                            ->create("whatsapp:+5491161961478", // to 
+                            ->create("whatsapp:".$cel, // to 
                                     array( 
                                         "from" => "whatsapp:+14155238886",       
                                         "body" => $mensaje 
                                     ) 
                             ); 
-            
+            }
             //print($message->sid);
         }
     }
