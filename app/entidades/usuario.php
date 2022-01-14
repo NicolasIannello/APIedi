@@ -39,12 +39,13 @@
 
         public static function CrearEmpresa($dat){
             $tipo="empresa";
+            $hash=password_hash($dat["passclie"], PASSWORD_BCRYPT);
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO Usuarios (NombreUsuario,Email,Contraseña,Tipo) VALUES (:us,:mail,:contra,:tipo)");
-            $consulta->execute(array(':us'=>$dat["nomemp"],':mail'=>$dat["mailemp"],':contra'=>$dat["contraemp"],':tipo'=>$tipo));
+            $consulta->execute(array(':us'=>$dat["nomemp"],':mail'=>$dat["mailemp"],':contra'=>$hash,':tipo'=>$tipo));
 
             $consulta = $objAccesoDatos->prepararConsulta("SELECT UsuarioID FROM Usuarios WHERE NombreUsuario=:us && Email=:mail && Contraseña=:contra && Tipo=:tipo");
-            $consulta->execute(array(':us'=>$dat["nomemp"],':mail'=>$dat["mailemp"],':contra'=>$dat["contraemp"],':tipo'=>$tipo));
+            $consulta->execute(array(':us'=>$dat["nomemp"],':mail'=>$dat["mailemp"],':contra'=>$hash,':tipo'=>$tipo));
             $resultado=$consulta->fetchAll(PDO::FETCH_COLUMN, 0);
             $UID=(int)$resultado[0];
 
@@ -57,12 +58,13 @@
 
         public static function CrearCliente($dat){
             $tipo="cliente";
+            $hash=password_hash($dat["passclie"], PASSWORD_BCRYPT);
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO Usuarios (NombreUsuario,Email,Contraseña,Tipo) VALUES (:us,:mail,:contra,:tipo)");
-            $consulta->execute(array(':us'=>$dat["userclie"],':mail'=>$dat["mailclie"],':contra'=>$dat["passclie"],':tipo'=>$tipo));
+            $consulta->execute(array(':us'=>$dat["userclie"],':mail'=>$dat["mailclie"],':contra'=>$hash,':tipo'=>$tipo));
 
             $consulta = $objAccesoDatos->prepararConsulta("SELECT UsuarioID FROM Usuarios WHERE NombreUsuario=:us && Email=:mail && Contraseña=:contra && Tipo=:tipo");
-            $consulta->execute(array(':us'=>$dat["userclie"],':mail'=>$dat["mailclie"],':contra'=>$dat["passclie"],':tipo'=>$tipo));
+            $consulta->execute(array(':us'=>$dat["userclie"],':mail'=>$dat["mailclie"],':contra'=>$hash,':tipo'=>$tipo));
             $resultado=$consulta->fetchAll(PDO::FETCH_COLUMN, 0);
             $UID=(int)$resultado[0];
 
