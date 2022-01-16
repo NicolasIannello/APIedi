@@ -39,7 +39,7 @@
 
         public static function CrearEmpresa($dat){
             $tipo="empresa";
-            $hash=password_hash($dat["passclie"], PASSWORD_BCRYPT);
+            $hash=password_hash($dat["contraemp"], PASSWORD_BCRYPT);
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO Usuarios (NombreUsuario,Email,Contraseña,Tipo) VALUES (:us,:mail,:contra,:tipo)");
             $consulta->execute(array(':us'=>$dat["nomemp"],':mail'=>$dat["mailemp"],':contra'=>$hash,':tipo'=>$tipo));
