@@ -144,11 +144,11 @@
             WHERE TU.TurnoID=:id");
             $consulta->execute(array(':id'=>$TurnoID));
 
-            cliente::ReportarEliminacion($Dcliente,$Dempresa);
+            cliente::ReportarEliminacion($Dcliente,$Dempresa,$datos['cel'],$datos['env']);
             return "Turno eliminado";
         }
 
-        public static function ReportarEliminacion($clie,$emp){
+        public static function ReportarEliminacion($clie,$emp,$cel,$env){
 
             $mail = new PHPMailer(true);
             //http://www.google.com/accounts/DisplayUnlockCaptcha
@@ -173,7 +173,21 @@
             $mail->Body='Hola '.$clie[0]->Nombre.' <b>'.$clie[0]->NombreUsuario.'</b> '.$clie[0]->Apellido.', le informamos que su turno para el dia:<b> '.$emp[0]->Dia.'</b> en el horario de las <b> '.$emp[0]->Horario.'</b>en la ubicacion de<b>: '.$emp[0]->Ubicacion.'</b>para el comercio:<b>: '.$emp[0]->NombreUsuario.'</b> ha sido cancelado de manera exitosa.';
             $mail->AltBody='Hola '.$clie[0]->Nombre.' '.$clie[0]->NombreUsuario.' '.$clie[0]->Apellido.', le informamos que su turno para el dia: '.$emp[0]->Dia.' en el horario de las  '.$emp[0]->Horario.' en la ubicacion de: '.$emp[0]->Ubicacion.'para el comercio: '.$emp[0]->NombreUsuario.' ha sido cancelado de manera exitosa.';
         
-            $mail->send();    
+            $mail->send();  
+            //--------------------------------------------------------------------------------------------//--------------------------------------------------------------------------------------------  
+            if($env=='true'){
+                $sid    = "ACea71c554ccddc543dc37e16e9e5b098a"; 
+                $token  = "9bf83f01"."ca370702f6d"."9bab317ba9b55"; 
+                $twilio = new Client($sid, $token); 
+                $mensaje='Hola '.$clie[0]->Nombre.' '.$clie[0]->NombreUsuario.' '.$clie[0]->Apellido.', le informamos que su turno para el dia: '.$emp[0]->Dia.' en el horario de las  '.$emp[0]->Horario.' en la ubicacion de: '.$emp[0]->Ubicacion.'para el comercio: '.$emp[0]->NombreUsuario.' ha sido cancelado de manera exitosa.';
+                $message = $twilio->messages 
+                                ->create("whatsapp:".$cel, // to 
+                                        array( 
+                                            "from" => "whatsapp:+14155238886",       
+                                            "body" => $mensaje 
+                                        ) 
+                                ); 
+                }
             //--------------------------------------------------------------------------------------------//--------------------------------------------------------------------------------------------
             $mail = new PHPMailer(true);
             //http://www.google.com/accounts/DisplayUnlockCaptcha
