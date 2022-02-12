@@ -170,7 +170,26 @@
                     
             $mail->isHTML(true);
             $mail->Subject='Se ha eliminado un turno';
-            $mail->Body='Hola '.$clie[0]->Nombre.' <b>'.$clie[0]->NombreUsuario.'</b> '.$clie[0]->Apellido.', le informamos que su turno para el dia:<b> '.$emp[0]->Dia.'</b> en el horario de las <b> '.$emp[0]->Horario.'</b>en la ubicacion de<b>: '.$emp[0]->Ubicacion.'</b>para el comercio:<b>: '.$emp[0]->NombreUsuario.'</b> ha sido cancelado de manera exitosa.';
+            //$mail->Body='Hola '.$clie[0]->Nombre.' <b>'.$clie[0]->NombreUsuario.'</b> '.$clie[0]->Apellido.', le informamos que su turno para el dia:<b> '.$emp[0]->Dia.'</b> en el horario de las <b> '.$emp[0]->Horario.'</b>en la ubicacion de<b>: '.$emp[0]->Ubicacion.'</b>para el comercio:<b>: '.$emp[0]->NombreUsuario.'</b> ha sido cancelado de manera exitosa.';
+            $mail->Body='<!DOCTYPE html><html lang="en"><head>
+                <meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+                <style>.Aspan{font-family: Arial, Helvetica, sans-serif;margin-left: 5%;}i{margin-left: 1%;}.header{background-color: rgb(52, 73, 94);color: rgb(236, 236, 236);font-size: 3rem;align-items: center;}#A{height: 4rem;}.container{border: solid;border-color: rgb(52, 73, 94);}.Bspan{margin-left: 3%;margin-right: 10%;margin-top: 1.5%;margin-bottom: 1.5%;}</style>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+                </head>
+                <body>
+                <div class="container">
+                    <div id="A" class="row header">
+                        <i class="fas fa-map-marker-alt"><span class="Aspan">Gestor de Turnos</span></i>
+                    </div>
+                    <div id="B" class="row">
+                        <span class="Bspan">
+                            Hola '.$clie[0]->Nombre.'<b> '.$clie[0]->NombreUsuario.'</b> '.$clie[0]->Apellido.', le informamos que su turno 
+                            para el dia:<b> '.$emp[0]->Dia.'</b> en el horario de las<b> '.$emp[0]->Horario.'.</b> en la ubicacion 
+                            de<b>: '.$emp[0]->Ubicacion.'</b> para el comercio:<b>: '.$emp[0]->NombreUsuario.'</b> ha sido cancelado de manera exitosa.
+                        </span>
+                    </div>
+                </div>
+                </body></html>';
             $mail->AltBody='Hola '.$clie[0]->Nombre.' '.$clie[0]->NombreUsuario.' '.$clie[0]->Apellido.', le informamos que su turno para el dia: '.$emp[0]->Dia.' en el horario de las  '.$emp[0]->Horario.' en la ubicacion de: '.$emp[0]->Ubicacion.'para el comercio: '.$emp[0]->NombreUsuario.' ha sido cancelado de manera exitosa.';
         
             $mail->send();  
@@ -209,7 +228,25 @@
                     
             $mail->isHTML(true);
             $mail->Subject='Se ha eliminado un turno';
-            $mail->Body='Hola <b>'.$emp[0]->NombreUsuario.'</b> le informamos que el usuario: '.$clie[0]->Nombre.' <b>'.$clie[0]->NombreUsuario.'</b> '.$clie[0]->Apellido.', ha eliminado su turno para el dia:<b> '.$emp[0]->Dia.'</b> en el horario de las <b> '.$emp[0]->Horario.'</b>.';
+            //$mail->Body='Hola <b>'.$emp[0]->NombreUsuario.'</b> le informamos que el usuario: '.$clie[0]->Nombre.' <b>'.$clie[0]->NombreUsuario.'</b> '.$clie[0]->Apellido.', ha eliminado su turno para el dia:<b> '.$emp[0]->Dia.'</b> en el horario de las <b> '.$emp[0]->Horario.'</b>.';
+            $mail->Body='<!DOCTYPE html><html lang="en"><head>
+                <meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+                <style>.Aspan{font-family: Arial, Helvetica, sans-serif;margin-left: 5%;}i{margin-left: 1%;}.header{background-color: rgb(52, 73, 94);color: rgb(236, 236, 236);font-size: 3rem;align-items: center;}#A{height: 4rem;}.container{border: solid;border-color: rgb(52, 73, 94);}.Bspan{margin-left: 3%;margin-right: 10%;margin-top: 1.5%;margin-bottom: 1.5%;}</style>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+                </head>
+                <body>
+                <div class="container">
+                    <div id="A" class="row header">
+                        <i class="fas fa-map-marker-alt"><span class="Aspan">Gestor de Turnos</span></i>
+                    </div>
+                    <div id="B" class="row">
+                        <span class="Bspan">
+                        Hola <b>'.$emp[0]->NombreUsuario.'</b> le informamos que el usuario: '.$clie[0]->Nombre.' <b>'.$clie[0]->NombreUsuario.'</b> '.$clie[0]->Apellido.'
+                        , ha eliminado su turno para el dia:<b> '.$emp[0]->Dia.'</b> en el horario de las <b> '.$emp[0]->Horario.'</b>.
+                        </span>
+                    </div>
+                </div>
+                </body></html>';
             $mail->AltBody='Hola '.$emp[0]->NombreUsuario.'le informamos que el usuario: '.$clie[0]->Nombre.' '.$clie[0]->NombreUsuario.' '.$clie[0]->Apellido.', ha eliminado su turno para el dia: '.$emp[0]->Dia.' en el horario de las '.$emp[0]->Horario.'.';
         
             $mail->send(); 
@@ -237,7 +274,25 @@
                     
             $mail->isHTML(true);
             $mail->Subject='Se ha solicitado un turno';
-            $mail->Body='Hola '.$clie[0]->Nombre.' <b>'.$clie[0]->NombreUsuario.'</b> '.$clie[0]->Apellido.', le informamos que su turno para el dia:<b> '.$emp[0]->Dia.'</b> en el horario de las <b> '.$emp[0]->Horario.'</b> en:<b> '.$emp[0]->Ubicacion.'</b> para el comercio: <b>'.$emp[0]->NombreUsuario.'</b> ha sido solicitado con exito.';
+            //$mail->Body='Hola '.$clie[0]->Nombre.' <b>'.$clie[0]->NombreUsuario.'</b> '.$clie[0]->Apellido.', le informamos que su turno para el dia:<b> '.$emp[0]->Dia.'</b> en el horario de las <b> '.$emp[0]->Horario.'</b> en:<b> '.$emp[0]->Ubicacion.'</b> para el comercio: <b>'.$emp[0]->NombreUsuario.'</b> ha sido solicitado con exito.';
+            $mail->Body='<!DOCTYPE html><html lang="en"><head>
+                <meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+                <style>.Aspan{font-family: Arial, Helvetica, sans-serif;margin-left: 5%;}i{margin-left: 1%;}.header{background-color: rgb(52, 73, 94);color: rgb(236, 236, 236);font-size: 3rem;align-items: center;}#A{height: 4rem;}.container{border: solid;border-color: rgb(52, 73, 94);}.Bspan{margin-left: 3%;margin-right: 10%;margin-top: 1.5%;margin-bottom: 1.5%;}</style>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+                </head>
+                <body>
+                <div class="container">
+                    <div id="A" class="row header">
+                        <i class="fas fa-map-marker-alt"><span class="Aspan">Gestor de Turnos</span></i>
+                    </div>
+                    <div id="B" class="row">
+                        <span class="Bspan">
+                        Hola '.$clie[0]->Nombre.' <b>'.$clie[0]->NombreUsuario.'</b> '.$clie[0]->Apellido.', le informamos que su turno para el dia:<b> '.$emp[0]->Dia.'</b> en el horario 
+                        de las <b> '.$emp[0]->Horario.'</b> en:<b> '.$emp[0]->Ubicacion.'</b> para el comercio: <b>'.$emp[0]->NombreUsuario.'</b> ha sido solicitado con exito.
+                        </span>
+                    </div>
+                </div>
+                </body></html>';
             $mail->AltBody='Hola '.$clie[0]->Nombre.' '.$clie[0]->NombreUsuario.' '.$clie[0]->Apellido.', le informamos que su turno para el dia: '.$emp[0]->Dia.' en el horario de las  '.$emp[0]->Horario.' en: '.$emp[0]->Ubicacion.' para el comercio:'.$emp[0]->NombreUsuario.'ha sido solicitado con exito.';
         
             $mail->send();    
@@ -262,7 +317,25 @@
                     
             $mail->isHTML(true);
             $mail->Subject='Se ha solicitado un turno';
-            $mail->Body='Hola <b>'.$emp[0]->NombreUsuario.'</b> le informamos que el usuario: '.$clie[0]->Nombre.' <b>'.$clie[0]->NombreUsuario.'</b> '.$clie[0]->Apellido.', ha solicitado un turno para el dia:<b> '.$emp[0]->Dia.'</b> en el horario de las <b> '.$emp[0]->Horario.'</b> para el servicio: <b>'.$emp[0]->Descripcion.'</b>.';
+            //$mail->Body='Hola <b>'.$emp[0]->NombreUsuario.'</b> le informamos que el usuario: '.$clie[0]->Nombre.' <b>'.$clie[0]->NombreUsuario.'</b> '.$clie[0]->Apellido.', ha solicitado un turno para el dia:<b> '.$emp[0]->Dia.'</b> en el horario de las <b> '.$emp[0]->Horario.'</b> para el servicio: <b>'.$emp[0]->Descripcion.'</b>.';
+            $mail->Body='<!DOCTYPE html><html lang="en"><head>
+                <meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+                <style>.Aspan{font-family: Arial, Helvetica, sans-serif;margin-left: 5%;}i{margin-left: 1%;}.header{background-color: rgb(52, 73, 94);color: rgb(236, 236, 236);font-size: 3rem;align-items: center;}#A{height: 4rem;}.container{border: solid;border-color: rgb(52, 73, 94);}.Bspan{margin-left: 3%;margin-right: 10%;margin-top: 1.5%;margin-bottom: 1.5%;}</style>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+                </head>
+                <body>
+                <div class="container">
+                    <div id="A" class="row header">
+                        <i class="fas fa-map-marker-alt"><span class="Aspan">Gestor de Turnos</span></i>
+                    </div>
+                    <div id="B" class="row">
+                        <span class="Bspan">
+                        Hola <b>'.$emp[0]->NombreUsuario.'</b> le informamos que el usuario: '.$clie[0]->Nombre.' <b>'.$clie[0]->NombreUsuario.'</b> '.$clie[0]->Apellido.', ha solicitado un turno para el 
+                        dia:<b> '.$emp[0]->Dia.'</b> en el horario de las <b> '.$emp[0]->Horario.'</b> para el servicio: <b>'.$emp[0]->Descripcion.'</b>.
+                        </span>
+                    </div>
+                </div>
+                </body></html>';
             $mail->AltBody='Hola '.$emp[0]->NombreUsuario.'le informamos que el usuario: '.$clie[0]->Nombre.' '.$clie[0]->NombreUsuario.' '.$clie[0]->Apellido.', ha solicitado un turno para el dia: '.$emp[0]->Dia.' en el horario de las '.$emp[0]->Horario.' para el servicio: '.$emp[0]->Descripcion.'.';
         
             $mail->send(); 
