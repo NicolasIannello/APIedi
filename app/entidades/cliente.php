@@ -16,14 +16,16 @@
         }
 
         public static function ObtenerTodos($datos){
+            $Fhoy = new DateTime(date("Y-n-j"));
+            $Fhoy=$Fhoy->format("Y-n-j");
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT TCE.tceID AS 'Codigo',TU.Dia AS 'Fecha',US.NombreUsuario AS 'Comercio',SE.Descripcion AS 'Servicio',
             TU.Horario AS 'Horario Turno',EM.Ubicacion AS 'Ubicacion' 
             FROM Turno AS TU ,TurnoClienteEmpresa AS TCE,PaqueteTurno AS PT,
             Servicios AS SE ,Empresa AS EM,Usuarios AS US 
             WHERE TCE.ClienteID=:emp && EM.UsuarioID=US.UsuarioID && EM.EmpresaID=PT.EmpresaID && PT.PaqueteID=TU.PaqueteID &&
-            TU.TurnoID=TCE.TurnoID && PT.ServicioID=SE.ServicioID");
-            $consulta->execute(array(':emp'=>$datos['ID']));
+            TU.TurnoID=TCE.TurnoID && PT.ServicioID=SE.ServicioID && TU.Dia>=:hoy ORDER BY TU.Dia");
+            $consulta->execute(array(':emp'=>$datos['ID'],':hoy'=>$Fhoy));
             $turnos=$consulta->fetchAll(PDO::FETCH_OBJ);
             return $turnos;
         }

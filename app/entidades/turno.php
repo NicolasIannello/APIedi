@@ -6,9 +6,11 @@
     class turno{
 
         public static function ObtenerTodos($dat){
+            $Fhoy = new DateTime(date("Y-n-j"));
+            $Fhoy=$Fhoy->format("Y-n-j");
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT TU.PaqueteID as 'Codigo agrupador',TU.TurnoID as 'ID Turno particular',TU.Dia as 'Fecha',SE.Descripcion as 'Servicio',TU.Horario as 'Horario Turno',TU.Cupos as 'Cupos disponibles' FROM Turno as TU,PaqueteTurno as PT,Servicios as SE WHERE TU.PaqueteID=PT.PaqueteID && PT.ServicioID=SE.ServicioID && PT.EmpresaID=:emp");
-            $consulta->execute(array(':emp'=>$dat["ID"]));
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT TU.PaqueteID as 'Codigo agrupador',TU.TurnoID as 'ID Turno particular',TU.Dia as 'Fecha',SE.Descripcion as 'Servicio',TU.Horario as 'Horario Turno',TU.Cupos as 'Cupos disponibles' FROM Turno as TU,PaqueteTurno as PT,Servicios as SE WHERE TU.PaqueteID=PT.PaqueteID && PT.ServicioID=SE.ServicioID && PT.EmpresaID=:emp && TU.Dia>=:hoy ORDER BY TU.Dia");
+            $consulta->execute(array(':emp'=>$dat["ID"],':hoy'=>$Fhoy));
             $turnos=$consulta->fetchAll(PDO::FETCH_OBJ);
             return $turnos;
         }
