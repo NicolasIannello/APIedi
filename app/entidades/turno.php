@@ -111,9 +111,9 @@
                         $consulta->execute(array(':dato'=>$dat["dato"],':id'=>$PID));
                         $afectados=$consulta->fetchAll(PDO::FETCH_OBJ);
                         //---------------------------------
-                        $consulta=$objAccesoDatos->prepararConsulta("DELETE TU,TCE FROM Turno as TU JOIN TurnoClienteEmpresa as TCE on TU.TurnoID=TCE.TurnoID WHERE Dia=:dato && PT.PaqueteID=:id");
+                        $consulta=$objAccesoDatos->prepararConsulta("DELETE TU,TCE FROM Turno as TU JOIN TurnoClienteEmpresa as TCE on TU.TurnoID=TCE.TurnoID WHERE Dia=:dato && TU.PaqueteID=:id");
                         $consulta->execute(array(':dato'=>$dat["dato"],':id'=>$PID));
-                        $consulta=$objAccesoDatos->prepararConsulta("DELETE TU FROM Turno as TU WHERE Dia=:dato && PT.PaqueteID=:id");
+                        $consulta=$objAccesoDatos->prepararConsulta("DELETE TU FROM Turno as TU WHERE Dia=:dato && TU.PaqueteID=:id");
                         $consulta->execute(array(':dato'=>$dat["dato"],':id'=>$PID));
                     }
                     break;
