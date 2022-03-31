@@ -8,10 +8,9 @@
             
             foreach($usuarios as $usuario){
                 if($datos["user"]==$usuario->NombreUsuario && password_verify($datos["contra"],$usuario->Contraseña) ){
-                    //$band=$usuario->Tipo;
-                    $band = new stdClass();
+                    $band = new stdClass();            
+                    $band->ID =openssl_encrypt($usuario->ID, "AES-128-CTR","gdtonlineiannello",0, "4831491486178994");
                     $band->Tipo =$usuario->Tipo;
-                    $band->ID =$usuario->ID;
                 }
             }
 
