@@ -292,6 +292,8 @@
                 $mail->Password='gestordeturnoss';                       
                 $mail->SMTPSecure=PHPMailer::ENCRYPTION_SMTPS;            
                 $mail->Port=465;                                    
+                $mail->CharSet = 'UTF-8';
+                $mail->Encoding = 'base64';
                     
                 $mail->setFrom('GestorDeTurnosOnline@gmail.com', 'Gestor de Turnos');
 

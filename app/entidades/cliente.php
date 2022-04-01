@@ -164,6 +164,8 @@
             $mail->Password='gestordeturnoss';                       
             $mail->SMTPSecure=PHPMailer::ENCRYPTION_SMTPS;            
             $mail->Port=465;                                    
+            $mail->CharSet = 'UTF-8';
+            $mail->Encoding = 'base64';
                     
             $mail->setFrom('GestorDeTurnosOnline@gmail.com', 'Gestor de Turnos');
             
@@ -186,8 +188,8 @@
                     <div id="B" class="row">
                         <span class="Bspan">
                             Hola '.$clie[0]->Nombre.'<b> '.$clie[0]->NombreUsuario.'</b> '.$clie[0]->Apellido.', le informamos que su turno 
-                            para el dia:<b> '.$emp[0]->Dia.'</b> en el horario de las<b> '.$emp[0]->Horario.'.</b> en la ubicacion 
-                            de<b>: '.$emp[0]->Ubicacion.'</b> para el comercio:<b>: '.$emp[0]->NombreUsuario.'</b> ha sido cancelado de manera exitosa.
+                            para el dia:<b> '.$emp[0]->Dia.'</b> en el horario de las<b> '.$emp[0]->Horario.',</b> en la ubicacion 
+                            de:<b> '.$emp[0]->Ubicacion.'</b> para el comercio:<b> '.$emp[0]->NombreUsuario.'</b> ha sido cancelado de manera exitosa.
                         </span>
                     </div>
                 </div>
@@ -222,6 +224,8 @@
             $mail->Password='gestordeturnoss';                       
             $mail->SMTPSecure=PHPMailer::ENCRYPTION_SMTPS;            
             $mail->Port=465;                                    
+            $mail->CharSet = 'UTF-8';
+            $mail->Encoding = 'base64';
                     
             $mail->setFrom('GestorDeTurnosOnline@gmail.com', 'Gestor de Turnos');
 
@@ -268,6 +272,8 @@
             $mail->Password='gestordeturnoss';                       
             $mail->SMTPSecure=PHPMailer::ENCRYPTION_SMTPS;            
             $mail->Port=465;                                    
+            $mail->CharSet = 'UTF-8';
+            $mail->Encoding = 'base64';
                     
             $mail->setFrom('GestorDeTurnosOnline@gmail.com', 'Gestor de Turnos');
             
@@ -311,6 +317,8 @@
             $mail->Password='gestordeturnoss';                       
             $mail->SMTPSecure=PHPMailer::ENCRYPTION_SMTPS;            
             $mail->Port=465;                                    
+            $mail->CharSet = 'UTF-8';
+            $mail->Encoding = 'base64';
                     
             $mail->setFrom('GestorDeTurnosOnline@gmail.com', 'Gestor de Turnos');
 
