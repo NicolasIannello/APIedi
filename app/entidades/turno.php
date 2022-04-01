@@ -25,7 +25,7 @@
                     $cant=count($fetcht);
                     if ($cant == 1) { 
                         //--------------------------------
-                        $consulta=$objAccesoDatos->prepararConsulta('SELECT US.Email, US.NombreUsuario, CL.Nombre, CL.Apellido, TU.Dia, TU.Horario FROM Usuarios as US, Clientes as CL, Turno as TU JOIN TurnoClienteEmpresa as TCE ON TU.TurnoID=TCE.TurnoID WHERE TU.PaqueteID=:dato && US.Tipo="cliente"');
+                        $consulta=$objAccesoDatos->prepararConsulta('SELECT US.Email, US.NombreUsuario, CL.Nombre, CL.Apellido, TU.Dia, TU.Horario FROM Usuarios as US, Clientes as CL, Turno as TU JOIN TurnoClienteEmpresa as TCE ON TU.TurnoID=TCE.TurnoID WHERE TU.PaqueteID=:dato && US.Tipo="cliente" && US.UsuarioID=CL.UsuarioID && CL.ClienteID=TCE.ClienteID');
                         $consulta->execute(array(':dato'=>$dat["dato"]));
                         $afectados=$consulta->fetchAll(PDO::FETCH_OBJ);
                         //---------------------------------
@@ -55,7 +55,7 @@
                     $cant=count($fetcht);
                     if ($cant == 1) { 
                         //--------------------------------
-                        $consulta=$objAccesoDatos->prepararConsulta('SELECT US.Email, US.NombreUsuario, CL.Nombre, CL.Apellido, TU.Dia, TU.Horario FROM Usuarios as US, Clientes as CL, Turno as TU JOIN TurnoClienteEmpresa as TCE ON TU.TurnoID=TCE.TurnoID WHERE TU.TurnoID=:dato && US.Tipo="cliente"');
+                        $consulta=$objAccesoDatos->prepararConsulta('SELECT US.Email, US.NombreUsuario, CL.Nombre, CL.Apellido, TU.Dia, TU.Horario FROM Usuarios as US, Clientes as CL, Turno as TU JOIN TurnoClienteEmpresa as TCE ON TU.TurnoID=TCE.TurnoID WHERE TU.TurnoID=:dato && US.Tipo="cliente" && US.UsuarioID=CL.UsuarioID && CL.ClienteID=TCE.ClienteID');
                         $consulta->execute(array(':dato'=>(int)$dat["dato"]));
                         $afectados=$consulta->fetchAll(PDO::FETCH_OBJ);
                         //---------------------------------
@@ -67,7 +67,7 @@
                         return "no encontrado";
                     }else{
                         //--------------------------------
-                        $consulta=$objAccesoDatos->prepararConsulta('SELECT US.Email, US.NombreUsuario, CL.Nombre, CL.Apellido, TU.Dia, TU.Horario FROM Usuarios as US, Clientes as CL, Turno as TU JOIN TurnoClienteEmpresa as TCE ON TU.TurnoID=TCE.TurnoID WHERE TU.TurnoID=:dato && US.Tipo="cliente"');
+                        $consulta=$objAccesoDatos->prepararConsulta('SELECT US.Email, US.NombreUsuario, CL.Nombre, CL.Apellido, TU.Dia, TU.Horario FROM Usuarios as US, Clientes as CL, Turno as TU JOIN TurnoClienteEmpresa as TCE ON TU.TurnoID=TCE.TurnoID WHERE TU.TurnoID=:dato && US.Tipo="cliente" && US.UsuarioID=CL.UsuarioID && CL.ClienteID=TCE.ClienteID');
                         $consulta->execute(array(':dato'=>(int)$dat["dato"]));
                         $afectados=$consulta->fetchAll(PDO::FETCH_OBJ);
                         //---------------------------------
@@ -95,7 +95,7 @@
                     $cant=count($fetcht);
                     if ($cant == 1) { 
                         //--------------------------------
-                        $consulta=$objAccesoDatos->prepararConsulta('SELECT US.Email, US.NombreUsuario, CL.Nombre, CL.Apellido, TU.Dia, TU.Horario FROM Usuarios as US, Clientes as CL, Turno as TU JOIN TurnoClienteEmpresa as TCE ON TU.TurnoID=TCE.TurnoID WHERE TU.Dia=:dato && US.Tipo="cliente" && TU.PaqueteID=:id');
+                        $consulta=$objAccesoDatos->prepararConsulta('SELECT US.Email, US.NombreUsuario, CL.Nombre, CL.Apellido, TU.Dia, TU.Horario FROM Usuarios as US, Clientes as CL, Turno as TU JOIN TurnoClienteEmpresa as TCE ON TU.TurnoID=TCE.TurnoID WHERE TU.Dia=:dato && US.Tipo="cliente" && TU.PaqueteID=:id && US.UsuarioID=CL.UsuarioID && CL.ClienteID=TCE.ClienteID');
                         $consulta->execute(array(':dato'=>$dat["dato"],':id'=>$PID));
                         $afectados=$consulta->fetchAll(PDO::FETCH_OBJ);
                         //---------------------------------
@@ -107,7 +107,7 @@
                         return "no encontrado";
                     }else{
                         //--------------------------------
-                        $consulta=$objAccesoDatos->prepararConsulta('SELECT US.Email, US.NombreUsuario, CL.Nombre, CL.Apellido, TU.Dia, TU.Horario FROM Usuarios as US, Clientes as CL, Turno as TU JOIN TurnoClienteEmpresa as TCE ON TU.TurnoID=TCE.TurnoID WHERE TU.Dia=:dato && US.Tipo="cliente" && TU.PaqueteID=:id');
+                        $consulta=$objAccesoDatos->prepararConsulta('SELECT US.Email, US.NombreUsuario, CL.Nombre, CL.Apellido, TU.Dia, TU.Horario FROM Usuarios as US, Clientes as CL, Turno as TU JOIN TurnoClienteEmpresa as TCE ON TU.TurnoID=TCE.TurnoID WHERE TU.Dia=:dato && US.Tipo="cliente" && TU.PaqueteID=:id && US.UsuarioID=CL.UsuarioID && CL.ClienteID=TCE.ClienteID');
                         $consulta->execute(array(':dato'=>$dat["dato"],':id'=>$PID));
                         $afectados=$consulta->fetchAll(PDO::FETCH_OBJ);
                         //---------------------------------
