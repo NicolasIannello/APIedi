@@ -277,9 +277,53 @@
         }
 
         public static function ReportarEliminacion($turnos){
-            $cant=count($turnos);
+            //$cant=count($turnos);
+            foreach ($turnos as $cliente) {
+                $mail = new PHPMailer(true);
+                //http://www.google.com/accounts/DisplayUnlockCaptcha
+                //$mail->SMTPDebug  = SMTP::DEBUG_SERVER;                   
+                $mail->isSMTP();                                            
+                $mail->Host='smtp.gmail.com';                       
+                $mail->SMTPAuth=true;                                   
+                //$mail->Username=getenv('mail'); 
+                $mail->Username='GestorDeTurnosOnline@gmail.com';       
+                //$mail->Password=getenv('mailpass');
+                $mail->Password='gestordeturnoss';                       
+                $mail->SMTPSecure=PHPMailer::ENCRYPTION_SMTPS;            
+                $mail->Port=465;                                    
+                $mail->CharSet = 'UTF-8';
+                $mail->Encoding = 'base64';
+                    
+                $mail->setFrom('GestorDeTurnosOnline@gmail.com', 'Gestor de Turnos');
 
-            for ($i=0; $i < $cant; $i++) { 
+                $mail->addAddress($cliente->Email);
+                $mail->addReplyTo('GestorDeTurnosOnline@gmail.com', 'Gestor de Turnos');
+                    
+                $mail->isHTML(true);
+                $mail->Subject='Se ha eliminado un turno';
+                $mail->Body='<!DOCTYPE html><html lang="en"><head>
+                <meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+                <style>.Aspan{font-family: Arial, Helvetica, sans-serif;margin-left: 5%;}i{margin-left: 1%;}.header{background-color: rgb(52, 73, 94);color: rgb(236, 236, 236);font-size: 3rem;align-items: center;}#A{height: 4rem;}.container{border: solid;border-color: rgb(52, 73, 94);}.Bspan{margin-left: 3%;margin-right: 10%;margin-top: 1.5%;margin-bottom: 1.5%;}</style>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+                </head>
+                <body>
+                <div class="container">
+                    <div id="A" class="row header">
+                        <i class="fas fa-map-marker-alt"><span class="Aspan">Gestor de Turnos</span></i>
+                    </div>
+                    <div id="B" class="row">
+                        <span class="Bspan">
+                        Hola '.$cliente->Nombre.' <b>'.$cliente->NombreUsuario.'</b> '.$cliente->Apellido.', le informamos que su turno para el 
+                        dia:<b> '.$cliente->Dia.'</b> en el horario de las <b> '.$cliente->Horario.'</b> ha sido cancelado.
+                        </span>
+                    </div>
+                </div>
+                </body></html>';
+                $mail->AltBody='Hola '.$cliente->Nombre.' '.$cliente->NombreUsuario.' '.$cliente->Apellido.', le informamos que su turno para el dia: '.$cliente->Dia.' en el horario de las  '.$cliente->Horario.' ha sido cancelado.';
+
+                $mail->send();
+            }
+            /*for ($i=0; $i < $cant; $i++) { 
                 $mail = new PHPMailer(true);
                 //http://www.google.com/accounts/DisplayUnlockCaptcha
                 //$mail->SMTPDebug  = SMTP::DEBUG_SERVER;                   
@@ -324,7 +368,7 @@
                 $mail->AltBody='Hola '.$turnos[$i]->Nombre.' '.$turnos[$i]->NombreUsuario.' '.$turnos[$i]->Apellido.', le informamos que su turno para el dia: '.$turnos[$i]->Dia.' en el horario de las  '.$turnos[$i]->Horario.' ha sido cancelado.';
         
                 $mail->send();    
-            }
+            }*/
         }
 
         public static function clienteCargar($dat){
