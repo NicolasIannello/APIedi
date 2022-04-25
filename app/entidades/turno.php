@@ -19,8 +19,8 @@
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             switch($dat["tipo"]){
                 case 'Codigo agrupador':
-                    $consulta=$objAccesoDatos->prepararConsulta("SELECT PaqueteID FROM Turno WHERE PaqueteID=:dato GROUP BY PaqueteID ORDER BY PaqueteID");
-                    $consulta->execute(array(':dato'=>(int)$dat["dato"]));
+                    $consulta=$objAccesoDatos->prepararConsulta("SELECT T.PaqueteID FROM Turno as T JOIN PaqueteTurno as P ON T.PaqueteID=P.PaqueteID WHERE T.PaqueteID=:dato && P.EmpresaID=:id GROUP BY T.PaqueteID ORDER BY T.PaqueteID");
+                    $consulta->execute(array(':dato'=>(int)$dat["dato"],':id'=>$dat["ID"]));
                     $fetcht=$consulta->fetchAll(PDO::FETCH_OBJ);
                     $cant=count($fetcht);
                     if ($cant == 1) { 
@@ -29,10 +29,10 @@
                         $consulta->execute(array(':dato'=>$dat["dato"]));
                         $afectados=$consulta->fetchAll(PDO::FETCH_OBJ);
                         //---------------------------------
-                        $consulta=$objAccesoDatos->prepararConsulta("DELETE PT,TU,TCE FROM PaqueteTurno as PT JOIN Turno as TU ON PT.PaqueteID=TU.PaqueteID JOIN TurnoClienteEmpresa as TCE on TU.TurnoID=TCE.TurnoID WHERE PT.PaqueteID=:dato");
-                        $consulta->execute(array(':dato'=>(int)$dat["dato"]));
-                        $consulta=$objAccesoDatos->prepararConsulta("DELETE PT,TU FROM PaqueteTurno as PT JOIN Turno as TU ON PT.PaqueteID=TU.PaqueteID WHERE PT.PaqueteID=:dato");
-                        $consulta->execute(array(':dato'=>(int)$dat["dato"]));
+                        $consulta=$objAccesoDatos->prepararConsulta("DELETE PT,TU,TCE FROM PaqueteTurno as PT JOIN Turno as TU ON PT.PaqueteID=TU.PaqueteID JOIN TurnoClienteEmpresa as TCE on TU.TurnoID=TCE.TurnoID WHERE PT.PaqueteID=:dato && PT.EmpresaID=:id");
+                        $consulta->execute(array(':dato'=>(int)$dat["dato"],':id'=>$dat["ID"]));
+                        $consulta=$objAccesoDatos->prepararConsulta("DELETE PT,TU FROM PaqueteTurno as PT JOIN Turno as TU ON PT.PaqueteID=TU.PaqueteID WHERE PT.PaqueteID=:dato && PT.EmpresaID=:id");
+                        $consulta->execute(array(':dato'=>(int)$dat["dato"],':id'=>$dat["ID"]));
                     }else{
                         return "no encontrado";
                     }
@@ -48,8 +48,8 @@
                         $PID=0;
                     }
                     
-                    $consulta=$objAccesoDatos->prepararConsulta("SELECT * FROM Turno WHERE PaqueteID=:dato");
-                    $consulta->execute(array(':dato'=>$PID));
+                    $consulta=$objAccesoDatos->prepararConsulta("SELECT * FROM Turno as T JOIN PaqueteTurno as P on T.PaqueteID=P.PaqueteID WHERE T.PaqueteID=:dato && P.EmpresaID=:id");
+                    $consulta->execute(array(':dato'=>$PID,':id'=>$dat["ID"]));
 
                     $fetcht=$consulta->fetchAll(PDO::FETCH_OBJ);
                     $cant=count($fetcht);
